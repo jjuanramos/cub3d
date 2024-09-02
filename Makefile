@@ -6,7 +6,7 @@
 #    By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/15 16:43:25 by juramos           #+#    #+#              #
-#    Updated: 2024/09/02 10:58:10 by juramos          ###   ########.fr        #
+#    Updated: 2024/09/02 11:13:14 by juramos          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,15 +33,17 @@ LIBFT_PATH	= 	libft/
 LIBFT_NAME	= 	libft.a
 LIBFT		= 	$(LIBFT_PATH)$(LIBFT_NAME)
 
+# Mlx
+MLX_PATH	= 	minilibx-linux/
+MLX_NAME	= 	libmlx.a
+MLX			= 	$(MLX_PATH)$(MLX_NAME)
+
 # build path
 B_PATH = build/
 
 # Includes
-INC_MS		= -I include/ \
-			-I /usr/local/Cellar/readline/8.2.10/include
-
-# Readline Compile
-RL_CMP		= -L/usr/local/Cellar/readline/8.2.10/lib
+INC_MS		= -I includes/ \
+			-I ./minilibx-linux
 
 # Colors
 DEF_COLOR 	= 	\033[0;39m
@@ -61,7 +63,7 @@ MAKEFLAGS 	+=	--no-print-directory
 
 ###
 
-all: $(B_PATH) $(LIBFT) $(NAME)
+all: $(B_PATH) $(MLX) $(LIBFT) $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
 	@echo "$(WHITE)Compiling ${notdir $<} in $(SRC_DIR)"
@@ -72,7 +74,7 @@ $(OBJF):
 	@mkdir -p  $(OBJ_DIRS)
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(INC) -lreadline $(RL_CMP)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(MLX) $(INC) -lXext -lX11 -lm
 	@echo "$(GREEN)cub3d compiled!$(DEF_COLOR)"
 
 $(B_PATH):
@@ -85,10 +87,15 @@ $(LIBFT):
 	@echo "Making libft..."
 	@make -sC $(LIBFT_PATH)
 
+$(MLX):
+	@echo "Making mlx..."
+	@make -sC $(MLX_PATH)
+
 clean:
 	@rm -rf $(OBJ_DIR)
 	@rm -rf $(B_PATH)
 	@make clean -sC $(LIBFT_PATH)
+	@make clean -sC $(MLX_PATH)
 	@echo "$(BLUE)cub3d object files cleaned!$(DEF_COLOR)"
 
 fclean: clean

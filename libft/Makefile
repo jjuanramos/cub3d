@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: juramos <juramos@student.42.fr>            +#+  +:+       +#+         #
+#    By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/15 16:43:25 by juramos           #+#    #+#              #
-#    Updated: 2024/04/11 12:34:49 by juramos          ###   ########.fr        #
+#    Updated: 2024/09/02 13:29:53 by juramos          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 B_NAME = libftbonus.a
 CC = gcc
-INCLUDE = ../include
+INCLUDE = ../includes
 CFLAGS = -Wall -Werror -Wextra -I
 SRC = ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c \
 	ft_isprint.c ft_toupper.c ft_tolower.c ft_strlen.c \
