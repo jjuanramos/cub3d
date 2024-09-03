@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/02 11:15:21 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/03 11:49:51 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@
 # include "libft.h"
 # include <unistd.h>
 # include <errno.h>
-# include <mlx.h>
+# include "../minilibx-linux/mlx.h"
 
 #endif
