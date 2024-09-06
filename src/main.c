@@ -6,69 +6,92 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:58:31 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/04 13:10:59 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/06 17:21:16 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	worldMap[MAPWIDTH][MAPHEIGHT]=
+int	is_pos(char c)
 {
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
+	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
+}
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+/* TODO
+	> maybe init_player should be a standalone function that
+	provides an empty struct with just angle and fov_rd filled.
+
+	> init_player should receive an empty t_player struct,
+	otherwise init it inside (and then return the struct).
+*/
+int	init_player(char **str)
 {
-	char	*dst;
+	int	y;
+	int	x;
+	int	times;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	y = 0;
+	times = 0;
+	while (str[y])
+	{
+		x = 0;
+		while (str[y][x])
+		{
+			if (str[y][x] != '0' && str[y][x] != '1')
+			{
+				if (!is_pos(str[y][x]))
+					return (1);
+				if (times == 1)
+					return (1);
+				times++;
+				/* TODO
+					t_player.pos_x = x;
+					t_player.pos_y = y;
+					t_player.plyr_x = TILE_SIZE * x + TILE_SIZE / 2;
+					t_player.plyr_y = TILE_SIZE * y + TILE_SIZE / 2;
+					add_dir(t_player, str[y][x]);
+				*/
+			}
+			x++;
+		}
+	}
+	return (0);
 }
 
 int	main(void)
 {
-	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
+	char	**map2d;
+	int		pos_x;
+	int		pos_y;
 
-	mlx = mlx_init();
-	img.img = mlx_new_image(mlx, SCREENWIDTH, SCREENHEIGHT);
-	/*
-	** After creating an image, we can call `mlx_get_data_addr`, we pass
-	** `bits_per_pixel`, `line_length`, and `endian` by reference. These will
-	** then be set accordingly for the *current* data address.
+	map2d = ft_calloc(10, sizeof(char *));
+	if (!map2d)
+		return (1);
+	map2d[0] = strdup("1111111111111111111111111");
+	map2d[1] = strdup("1000000000000000000100001");
+	map2d[2] = strdup("1001000000000S00000000001");
+	map2d[3] = strdup("1001000000000000001000001");
+	map2d[4] = strdup("1001000000000000001000001");
+	map2d[5] = strdup("1001000000100000001000001");
+	map2d[6] = strdup("1001000000000000001000001");
+	map2d[7] = strdup("1001000000001000001000001");
+	map2d[8] = strdup("1111111111111111111111111");
+	map2d[9] = NULL;
+	/* TODO
+		We receive the char **above from Carlos' parsing. Thus:
+		[] Check that there is a player in the map, otherwise return error;
+		[] Add to t_player:
+			[] pos_x: position x of player in map;
+			[] pos_y: position y of player in map;
+			[] dir_x: starting direction of x player in map;
+			[] dir_y: starting direction of y player in map;
+			[] plyr_x: position x of player in map (in pixels);
+			[] plyr_y: position y of player in map (in pixels);
+			[] fov_rd: field of vision in radians; (FOV * M_PI) / 180;
+			[] angle: player angle (starts at pi); (M_PI);
 	*/
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-			&img.endian);
-	mlx_win = mlx_new_window(mlx, SCREENWIDTH, SCREENHEIGHT, "raycasting");
-	if (!mlx_win)
-		return (printf("%s\n", strerror(errno)), 1);
-	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+	pos_x = 14;
+	pos_y = 3;
 	return (0);
 }
 
