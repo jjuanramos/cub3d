@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 10:45:05 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/07 11:15:04 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/07 12:21:31 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,15 @@ int	is_pos(char c)
 }
 
 /*
-	We are assuming that N equals 1 in the y-axis,
-	and not -1. Not sure if that might lead to problems
-	later on, so making it explicit here.
+	We are assuming that N equals -1 in the y-axis,
+	and not 1.
 */
 void	add_dir(t_player *plyr, char c)
 {
 	if (c == 'N')
 	{
 		plyr->dir_x = 0;
-		plyr->dir_y = 1;
+		plyr->dir_y = -1;
 	}
 	else if (c == 'E')
 	{
@@ -57,7 +56,7 @@ void	add_dir(t_player *plyr, char c)
 	else if (c == 'S')
 	{
 		plyr->dir_x = 0;
-		plyr->dir_y = -1;
+		plyr->dir_y = 1;
 	}
 	else if (c == 'W')
 	{
