@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/04 12:47:58 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/07 11:08:11 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # define MAPHEIGHT 24
 # define SCREENWIDTH 640
 # define SCREENHEIGHT 480
+# define TILE_SIZE 30
+# define FOV 60
 
 /*	Buttons & Keys	*/
 # define CLOSE_BUTTON 17
@@ -41,6 +43,7 @@
 # include "libft.h"
 # include <unistd.h>
 # include <errno.h>
+# include <math.h>
 # include "../minilibx-linux/mlx.h"
 
 typedef struct s_data
@@ -50,6 +53,22 @@ typedef struct s_data
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}				t_data;
+}			t_data;
+
+typedef struct s_player
+{
+	int		pos_x;
+	int		pos_y;
+	int		dir_x;
+	int		dir_y;
+	float	plyr_x;
+	float	plyr_y;
+	float	fov_rd;
+	float	angle;
+}			t_player;
+
+/* init_player.c */
+t_player	*init_player(char **str);
+void		display_player(t_player *plyr);
 
 #endif
