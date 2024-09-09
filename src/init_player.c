@@ -6,14 +6,14 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 10:45:05 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/07 12:21:31 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/09 10:19:28 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
 int			is_pos(char c);
-t_player	*init_player(char **str);
+int			init_player(t_mlx *mlx);
 int			fill_player(char **str, t_player *plyr);
 void		display_player(t_player *plyr);
 void		add_dir(t_player *plyr, char c);
@@ -65,20 +65,18 @@ void	add_dir(t_player *plyr, char c)
 	}
 }
 
-t_player	*init_player(char **str)
+int	init_player(t_mlx *mlx)
 {
-	t_player	*plyr;
-
-	plyr = ft_calloc(1, sizeof(t_player));
-	if (!plyr)
-		return (NULL);
-	plyr->fov_rd = (M_PI * FOV) / 180;
-	plyr->angle = M_PI;
-	if (fill_player(str, plyr))
-		return (NULL);
-	plyr->plyr_x = TILE_SIZE * plyr->pos_x + TILE_SIZE / 2;
-	plyr->plyr_y = TILE_SIZE * plyr->pos_y + TILE_SIZE / 2;
-	return (plyr);
+	mlx->plyr = ft_calloc(1, sizeof(t_player));
+	if (!mlx->plyr)
+		return (1);
+	mlx->plyr->fov_rd = (M_PI * FOV) / 180;
+	mlx->plyr->angle = M_PI;
+	if (fill_player(mlx->dt->map2d, mlx->plyr))
+		return (1);
+	mlx->plyr->plyr_x = TILE_SIZE * mlx->plyr->pos_x + TILE_SIZE / 2;
+	mlx->plyr->plyr_y = TILE_SIZE * mlx->plyr->pos_y + TILE_SIZE / 2;
+	return (0);
 }
 
 int	fill_player(char **str, t_player *plyr)
