@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:58:31 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/09 10:22:36 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/09 13:33:27 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,15 @@ int	init_dt(t_mlx *mlx)
 	return (0);
 }
 
+void	start_game(t_mlx *mlx)
+{
+	mlx->mlx = mlx_init();
+	mlx->win = mlx_new_window(mlx->mlx, SCREENWIDTH, SCREENHEIGHT, "Cub3D");
+	mlx_loop(mlx->mlx);
+	mlx->img = mlx_new_image(mlx->mlx_p, SCREENWIDTH, SCREENHEIGHT);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
+}
+
 int	main(void)
 {
 	t_mlx		mlx;
@@ -44,6 +53,7 @@ int	main(void)
 	if (init_player(&mlx))
 		return (1);
 	display_player(mlx.plyr);
+	start_game(&mlx);
 	free_mlx(&mlx);
 	return (0);
 }

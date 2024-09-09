@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 10:15:46 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/09 10:23:40 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/09 13:38:37 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ int	free_mlx(t_mlx *mlx)
 		free(mlx->dt->map2d);
 		free(mlx->dt);
 	}
+	mlx_destroy_window(mlx->mlx, mlx->win);
 	return (0);
 }

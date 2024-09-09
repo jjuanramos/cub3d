@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 10:45:05 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/09 10:19:28 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/09 13:36:35 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int			is_pos(char c);
 int			init_player(t_mlx *mlx);
-int			fill_player(char **str, t_player *plyr);
+int			fill_player(t_mlx *mlx);
 void		display_player(t_player *plyr);
 void		add_dir(t_player *plyr, char c);
 
@@ -72,14 +72,14 @@ int	init_player(t_mlx *mlx)
 		return (1);
 	mlx->plyr->fov_rd = (M_PI * FOV) / 180;
 	mlx->plyr->angle = M_PI;
-	if (fill_player(mlx->dt->map2d, mlx->plyr))
+	if (fill_player(mlx))
 		return (1);
 	mlx->plyr->plyr_x = TILE_SIZE * mlx->plyr->pos_x + TILE_SIZE / 2;
 	mlx->plyr->plyr_y = TILE_SIZE * mlx->plyr->pos_y + TILE_SIZE / 2;
 	return (0);
 }
 
-int	fill_player(char **str, t_player *plyr)
+int	fill_player(t_mlx *mlx)
 {
 	int	y;
 	int	x;
@@ -87,19 +87,19 @@ int	fill_player(char **str, t_player *plyr)
 
 	y = 0;
 	times = 0;
-	while (str[y])
+	while (mlx->dt->map2d[y])
 	{
 		x = 0;
-		while (str[y][x])
+		while (mlx->dt->map2d[y][x])
 		{
-			if (str[y][x] != '0' && str[y][x] != '1')
+			if (mlx->dt->map2d[y][x] != '0' && mlx->dt->map2d[y][x] != '1')
 			{
-				if (!is_pos(str[y][x]) || times == 1)
+				if (!is_pos(mlx->dt->map2d[y][x]) || times == 1)
 					return (1);
 				times++;
-				plyr->pos_x = x;
-				plyr->pos_y = y;
-				add_dir(plyr, str[y][x]);
+				mlx->plyr->pos_x = x;
+				mlx->plyr->pos_y = y;
+				add_dir(mlx->plyr, mlx->dt->map2d[y][x]);
 			}
 			x++;
 		}

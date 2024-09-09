@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/09 10:22:57 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/09 13:31:53 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_player
 	int		pos_y;
 	int		dir_x;
 	int		dir_y;
+	int		rot_dir;
 	float	plyr_x;
 	float	plyr_y;
 	float	fov_rd;
@@ -67,7 +68,9 @@ typedef struct s_player
 
 typedef struct s_mlx
 {
+	void		*mlx;
 	void		*img;
+	void		*win;
 	void		*mlx_p;
 	t_data		*dt;
 	t_player	*plyr;
@@ -78,6 +81,6 @@ int		init_player(t_mlx *mlx);
 void	display_player(t_player *plyr);
 
 /* free_mlx.c */
-int	free_mlx(t_mlx *mlx);
+int		free_mlx(t_mlx *mlx);
 
 #endif
