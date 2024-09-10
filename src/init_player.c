@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 10:45:05 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/10 10:45:58 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/10 12:37:27 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	init_player(t_mlx *mlx)
 	mlx->plyr->angle = M_PI;
 	if (fill_player(mlx))
 		return (1);
+	printf("filled player\n");
 	mlx->plyr->plyr_x = TILE_SIZE * mlx->plyr->pos_x + TILE_SIZE / 2;
 	mlx->plyr->plyr_y = TILE_SIZE * mlx->plyr->pos_y + TILE_SIZE / 2;
 	return (0);
@@ -93,7 +94,8 @@ int	fill_player(t_mlx *mlx)
 		x = 0;
 		while (mlx->map->map[y][x])
 		{
-			if (mlx->map->map[y][x] != '0' && mlx->map->map[y][x] != '1')
+			if (mlx->map->map[y][x] != '0' && mlx->map->map[y][x] != '1'
+				&& mlx->map->map[y][x] != '\n')
 			{
 				if (!is_pos(mlx->map->map[y][x]) || times == 1)
 					return (1);

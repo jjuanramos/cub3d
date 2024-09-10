@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:58:31 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/10 12:31:47 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/10 12:39:17 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,18 @@ int	main(int argc, char **argv)
 	t_mlx		mlx;
 
 	if (argc != 2)
-		ft_error("There must be two arguments", &mlx);
+		ft_error("There must be two arguments\n", &mlx);
 	parse_map(argv[1], &mlx);
-	printf("we got here mfers!");
 	// if (init_map(&mlx))
 	// 	return (1);
 	if (init_player(&mlx))
-		ft_error("Issue initiating player", &mlx);
+		ft_error("Issue initiating player\n", &mlx);
 	display_player(mlx.plyr);
+	printf("textures: %s %s %s %s\ncolors: (%d %d %d), (%d %d %d)\n",
+		mlx.map->no_text, mlx.map->so_text,	mlx.map->we_text, mlx.map->ea_text,
+		mlx.map->ceiling_color[0], mlx.map->ceiling_color[1], mlx.map->ceiling_color[2],
+		mlx.map->floor_color[0], mlx.map->floor_color[1], mlx.map->floor_color[2]
+	);
 	start_game(&mlx);
 	free_mlx(&mlx);
 	return (0);
