@@ -1,6 +1,15 @@
 {
 	"files.associations": {
-		"stdlib.h": "c"
+		"stdlib.h": "c",
+		"mlx_int.h": "c",
+		"__availability": "c",
+		"__config": "c",
+		"__locale": "c",
+		"bitset": "c",
+		"ios": "c",
+		"locale": "c",
+		"system_error": "c",
+		"tuple": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }

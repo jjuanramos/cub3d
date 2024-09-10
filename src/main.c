@@ -6,69 +6,65 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:58:31 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/04 13:10:59 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/10 10:38:15 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	worldMap[MAPWIDTH][MAPHEIGHT]=
-{
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
+// int	init_dt(t_mlx *mlx)
+// {
+// 	mlx->dt = ft_calloc(sizeof(t_data), 1);
+// 	if (!mlx->dt)
+// 		return (1);
+// 	mlx->dt->map2d = ft_calloc(10, sizeof(char *));
+// 	if (!mlx->dt->map2d)
+// 		return (1);
+// 	mlx->dt->map2d[0] = strdup("1111111111111111111111111");
+// 	mlx->dt->map2d[1] = strdup("1000000000000000000100001");
+// 	mlx->dt->map2d[2] = strdup("1001000000000S00000000001");
+// 	mlx->dt->map2d[3] = strdup("1001000000000000001000001");
+// 	mlx->dt->map2d[4] = strdup("1001000000000000001000001");
+// 	mlx->dt->map2d[5] = strdup("1001000000100000001000001");
+// 	mlx->dt->map2d[6] = strdup("1001000000000000001000001");
+// 	mlx->dt->map2d[7] = strdup("1001000000001000001000001");
+// 	mlx->dt->map2d[8] = strdup("1111111111111111111111111");
+// 	mlx->dt->map2d[9] = NULL;
+// 	mlx->dt->h_map = 10;
+// 	mlx->dt->w_map = 25;
+// 	return (0);
+// }
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	start_game(t_mlx *mlx)
 {
-	char	*dst;
+	mlx->mlx = mlx_init();
+	mlx->win = mlx_new_window(mlx->mlx, SCREENWIDTH, SCREENHEIGHT, "Cub3D");
+	mlx_loop(mlx->mlx);
+	mlx->img = mlx_new_image(mlx->mlx_p, SCREENWIDTH, SCREENHEIGHT);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
+}
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+int	ft_error(char *errormsg, t_mlx *mlx)
+{
+	printf("%s\n", errormsg);
+	free_mlx(&mlx);
+	exit(1);
 }
 
 int	main(void)
 {
-	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
+	t_mlx		mlx;
 
-	mlx = mlx_init();
-	img.img = mlx_new_image(mlx, SCREENWIDTH, SCREENHEIGHT);
-	/*
-	** After creating an image, we can call `mlx_get_data_addr`, we pass
-	** `bits_per_pixel`, `line_length`, and `endian` by reference. These will
-	** then be set accordingly for the *current* data address.
-	*/
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-			&img.endian);
-	mlx_win = mlx_new_window(mlx, SCREENWIDTH, SCREENHEIGHT, "raycasting");
-	if (!mlx_win)
-		return (printf("%s\n", strerror(errno)), 1);
-	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+	if (argc != 2)
+		ft_error("There must be two arguments");
+	parse_map(argv[1], map);
+	// if (init_map(&mlx))
+	// 	return (1);
+	if (init_player(&mlx))
+		ft_error("Issue initiating player");
+	display_player(mlx.plyr);
+	start_game(&mlx);
+	free_mlx(&mlx);
 	return (0);
 }
 

@@ -3,28 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:28:43 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/10 10:20:02 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/10 10:34:06 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
-
-typedef struct	s_map {
-	char	**map;
-	char 	*no_text;
-	char 	*so_text;
-	char 	*we_text;
-	char	*ea_text;
-	int		*floor_color;
-	int		*ceiling_color;
-	int		width;
-	int		height;	
-}				t_map;
 
 int check_file_extension(char *file)
 {
@@ -257,7 +245,7 @@ t_map *fill_map_info(char **read)
 	return (ret);
 }
 
-void parse_map(char *file, t_map *map) 
+void parse_map(char *file, t_mlx *mlx)
 {
 	int		fd;
 	char	**read;
@@ -268,17 +256,17 @@ void parse_map(char *file, t_map *map)
 	read = get_file_contents(fd);
 	if (!read) // read esta vacio
 		error("Empty map");
-	map = fill_map_info(read);
-	check_valid_map(map->map); // aqui hacer las comprobaciones de si el mapa es valido
+	mlx->map = fill_map_info(read);
+	check_valid_map(mlx->map->map); // aqui hacer las comprobaciones de si el mapa es valido
 }
 
-// Los calloc deberian ser malloc? por el hecho de que si fallase alguno deberiamos liberar toda la memoria que alocamos
+// // Los calloc deberian ser malloc? por el hecho de que si fallase alguno deberiamos liberar toda la memoria que alocamos
 
-int main(int argc, char *argv[]) 
-{
-	t_map	*map;
+// int main(int argc, char *argv[]) 
+// {
+// 	t_map	*map;
 	
-	if (argc != 2)
-		error("There must be two arguments"); // Crear ft error
-	parse_map(argv[1], map);
-}
+// 	if (argc != 2)
+// 		error("There must be two arguments"); // Crear ft error
+// 	parse_map(argv[1], map);
+// }
