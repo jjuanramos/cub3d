@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 10:45:05 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/10 10:31:18 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/10 10:45:58 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	init_player(t_mlx *mlx)
 	return (0);
 }
 
+// TODO: handle spaces
 int	fill_player(t_mlx *mlx)
 {
 	int	y;
