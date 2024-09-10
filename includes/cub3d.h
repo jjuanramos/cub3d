@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/09 13:31:53 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/10 10:33:52 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,17 @@
 # include <math.h>
 # include "../minilibx-linux/mlx.h"
 
-typedef struct s_data
-{
-	char	**map2d;
-	int		w_map;
-	int		h_map;
-}			t_data;
+typedef struct	s_map {
+	char	**map;
+	char 	*no_text;
+	char 	*so_text;
+	char 	*we_text;
+	char	*ea_text;
+	int		*floor_color;
+	int		*ceiling_color;
+	int		width;
+	int		height;	
+}				t_map;
 
 typedef struct s_player
 {
@@ -72,7 +77,7 @@ typedef struct s_mlx
 	void		*img;
 	void		*win;
 	void		*mlx_p;
-	t_data		*dt;
+	t_map		*map;
 	t_player	*plyr;
 }			t_mlx;
 
@@ -82,5 +87,8 @@ void	display_player(t_player *plyr);
 
 /* free_mlx.c */
 int		free_mlx(t_mlx *mlx);
+
+/* parse_map.c */
+void	parse_map(char *file, t_mlx *mlx);
 
 #endif
