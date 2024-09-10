@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:28:43 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/10 10:34:06 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/10 11:26:42 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,11 +238,99 @@ t_map *fill_map_info(char **read)
 	ret->ceiling_color = get_color(read, "C");
 	ret->map = get_map(read); // cargar el mapa y solo el mapa
 	if (!ret->floor_color || !ret->ceiling_color)
-		error("Colors are incorrect");
+		ft_error("Colors are incorrect");
 	if (!ret->no_text || !ret->so_text || !ret->ea_text || !ret->we_text);
-		error("Texture paths are incorrect");
+		ft_error("Texture paths are incorrect");
 	free(read);
 	return (ret);
+}
+
+int	is_valid_char(char c)
+{
+	return (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c = ' ');
+}
+
+int check_spaces(char char) 
+{
+	return (0);
+}
+
+int check_row(char *line)
+{
+	char tmp;
+	
+	while (*line && *line == ' ')
+		line++;
+	if (*line && *line != 1)
+		return (1);
+	while (*line && *line != '\n')
+	{
+		if (*line != ' ')
+			tmp = *line;
+		line++;
+	}
+	if (tmp != 1)
+		return(1);
+	return(0);
+}
+
+int get_width(char **map)
+{
+	int		width;
+	int		spaces;
+	bool	found_space;
+	int		i;
+	int		j;
+
+	found_space = false;
+	i = 0;
+	width = 0;
+	while (map[i]) 
+	{
+		j = 0;
+		while (map[i][j] && map[i][j] == ' ')
+				j++;
+		while (map[i][j] && map[i][j] != '\n')
+		{
+			if (map[i][j] == ' ')
+			{
+				found_space = true;
+				spaces++;
+			}
+			if (found_space == true && map[i][j] != ' ')
+				spaces = 0;
+			j++;
+		}
+		if (width < j - spaces)
+			width = j - spaces;
+		i++;
+	}
+	return (width);
+}
+
+void check_valid_map(t_map *map) 
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	map->height = get_line_nbr(map->map);
+	while (map->map[i])
+	{
+		j = 0;
+		while (map->map[i][j])
+		{
+			if ((i == 0 || i == height || check_spaces(map[i][j])) && map[i][j] != 1)
+				ft_error("Map is not enclosed");
+			else if (check_row(map[i]))
+				ft_error("Map is not enclosed");
+			else if (is_valid_char(map[i][j]))
+				ft_error("Wrong character");
+			j++;
+		}
+		i++;
+	}
+	map->width = get_width(map->map);
 }
 
 void parse_map(char *file, t_mlx *mlx)
@@ -252,12 +340,12 @@ void parse_map(char *file, t_mlx *mlx)
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0 || check_file_extension(file))
-		error("Issue with the file");
+		ft_error("Issue with the file");
 	read = get_file_contents(fd);
 	if (!read) // read esta vacio
-		error("Empty map");
+		ft_error("Empty map");
 	mlx->map = fill_map_info(read);
-	check_valid_map(mlx->map->map); // aqui hacer las comprobaciones de si el mapa es valido
+	check_valid_map(mlx->map); // aqui hacer las comprobaciones de si el mapa es valido
 }
 
 // // Los calloc deberian ser malloc? por el hecho de que si fallase alguno deberiamos liberar toda la memoria que alocamos
@@ -267,6 +355,6 @@ void parse_map(char *file, t_mlx *mlx)
 // 	t_map	*map;
 	
 // 	if (argc != 2)
-// 		error("There must be two arguments"); // Crear ft error
+// 		ft_error("There must be two arguments"); // Crear ft ft_error
 // 	parse_map(argv[1], map);
 // }
