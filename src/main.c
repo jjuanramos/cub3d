@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:58:31 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/10 11:50:45 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/10 12:31:47 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	main(int argc, char **argv)
 		ft_error("There must be two arguments", &mlx);
 	parse_map(argv[1], &mlx);
 	printf("we got here mfers!");
-	exit(1);
 	// if (init_map(&mlx))
 	// 	return (1);
 	if (init_player(&mlx))

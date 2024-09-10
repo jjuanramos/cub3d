@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:28:43 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/10 12:12:00 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/10 12:31:34 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,20 +98,20 @@ char **get_file_contents(int fd) // rellenar una matriz con cada linea del archi
 	return (map);
 }
 
-char *clean_spaces(char *line) 
-{
-	char *hold;
-	char *clean_line;
+// char *clean_spaces(char *line) 
+// {
+// 	char *hold;
+// 	char *clean_line;
 	
-	hold = line;
-	while (*hold && *hold != ' ')
-		hold++;
-	while (*hold && *hold == ' ')
-		hold++;
-	clean_line = ft_strdup(line);
-	free(line); // necesario?
-	return (clean_line);
-}
+// 	hold = line;
+// 	while (*hold && *hold != ' ')
+// 		hold++;
+// 	while (*hold && *hold == ' ')
+// 		hold++;
+// 	clean_line = ft_strdup(line);
+// 	free(line); // necesario?
+// 	return (clean_line);
+// }
 
 char *get_text(char **read, char *to_find)
 {
@@ -125,7 +125,7 @@ char *get_text(char **read, char *to_find)
 		while (read[i][j] && read[i][j] == ' ')
 			j++;
 		if (ft_strncmp(read[i], to_find, ft_strlen(to_find)) == 0)
-			return (clean_spaces(read[i])); // Aqui falta hacer algun tipo de comprobacion de que el path exista ? Quiza solo de que el texto este correcto y comprobar si existe se puede hacer despues
+			return (read[i]); // Aqui falta hacer algun tipo de comprobacion de que el path exista ? Quiza solo de que el texto este correcto y comprobar si existe se puede hacer despues
 		i++;
 	}
 	return (NULL);
@@ -170,7 +170,7 @@ int *get_color(char **read, char *to_find)
 		while (read[i][j] && read[i][j] == ' ')
 			j++;
 		if (ft_strncmp(read[i], to_find, ft_strlen(to_find)) == 0)
-			return (get_rgb_int_arr(clean_spaces(read[i]))); // Lo mismo, falta comprobacion creo
+			return (get_rgb_int_arr(read[i])); // Lo mismo, falta comprobacion creo
 		i++;
 	}
 	return (NULL);
@@ -209,25 +209,16 @@ char **get_map(char **read) // contar que tex_lines llegue a 6
 	int		blank_lines;
 
 	lines_in_file = ft_arrlen(read);
-	printf("lines in file: %d\n", lines_in_file);
 	tex_lines = 0;
 	blank_lines = 0;
 	while (*read && tex_lines != 6) 
 	{
 		if (is_empty(*read))
-		{
-			printf("blank: %s\n", *read);
 			blank_lines++;
-		}
 		else
-		{
-			printf("text: %s\n", *read);
 			tex_lines++;
-		}
-		// printf("%s, is_empty: %d\n", *read, is_empty(*read));
 		read++;
 	}
-	printf("blank_lines: %d, text_lines: %d\n", blank_lines, tex_lines);
 	while (*read && is_empty(*read))
 	{
 		read++;
@@ -277,7 +268,7 @@ int check_row(char *line)
 	
 	while (*line && *line == ' ')
 		line++;
-	if (*line && *line != 1)
+	if (*line && *line != '1')
 		return (1);
 	while (*line && *line != '\n')
 	{
@@ -285,7 +276,7 @@ int check_row(char *line)
 			tmp = *line;
 		line++;
 	}
-	if (tmp != 1)
+	if (tmp != '1')
 		return(1);
 	return(0);
 }
@@ -330,24 +321,18 @@ void check_valid_map(t_map *map)
 	int	j;
 
 	i = 0;
-	while (map->map[i])
-	{
-		printf("%s", map->map[i]);
-		i++;
-	}
-	exit(1);
 	map->height = get_line_nbr(map->map);
 	while (map->map[i])
 	{
 		j = 0;
-		while (map->map[i][j])
+		while (map->map[i][j] && map->map[i][j] != '\n')
 		{
-			if ((i == 0 || i == map->height || check_spaces(map->map[i][j])) && map->map[i][j] != 1)
-				(printf("Map is not enclosed 1\n"), exit(1));
+			if ((i == 0 || i == map->height || check_spaces(map->map[i][j])) && map->map[i][j] != '1')
+				(printf("Map is not enclosed: %c, (%d %d)\n", map->map[i][j], i, j), exit(1));
 			else if (check_row(map->map[i]))
 				(printf("Map is not enclosed 2\n"), exit(1));
-			else if (is_valid_char(map->map[i][j]))
-				(printf("Wrong Character\n"), exit(1));
+			else if (!is_valid_char(map->map[i][j]))
+				(printf("Wrong Character: %c\n", map->map[i][j]), exit(1));
 			j++;
 		}
 		i++;
