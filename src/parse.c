@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:28:43 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/10 11:26:42 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:12:00 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <stdio.h>
-#include <unistd.h>
+#include "../includes/cub3d.h"
 
 int check_file_extension(char *file)
 {
 	size_t	i;
 
 	i = ft_strlen(file);
-	if (ft_strncmp((file + i - 4), ".cub"), 4)
+	if (ft_strncmp((file + i - 4), ".cub", 4))
 		return (1);
 	else 
 		return (0);
@@ -64,7 +62,7 @@ char **append_str(char **map, char *buf)
 	char **new_map;
 	int	line_nbr;
 
-	line_nbr = get_line_nbr(map)
+	line_nbr = get_line_nbr(map);
 	new_map = ft_calloc(sizeof(char *), line_nbr + 2);
 	if (!(*map)) 
 	{
@@ -126,21 +124,23 @@ char *get_text(char **read, char *to_find)
 		j = 0;
 		while (read[i][j] && read[i][j] == ' ')
 			j++;
-		if (ft_strncmp(read[i][j]), to_find, ft_strlen(to_find) == 0)
-			return (clean_spaces(read[i])); // Aqui falta hacer algun tipo de comprobacion de que el path exista ? Quiza solo de que el texto este correcto y comprobar si existe se puede hacer despues	
+		if (ft_strncmp(read[i], to_find, ft_strlen(to_find)) == 0)
+			return (clean_spaces(read[i])); // Aqui falta hacer algun tipo de comprobacion de que el path exista ? Quiza solo de que el texto este correcto y comprobar si existe se puede hacer despues
+		i++;
 	}
 	return (NULL);
 }
 
 int *get_rgb_int_arr(char *line) //eg 255,1,99
 {
-	int 	rgb[3];
+	int 	*rgb;
 	char	*hold;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
+	rgb = ft_calloc(sizeof(int), 3);
 	while (j <= 3) 
 	{
 		while (line[i] && (line[i] >= 48 && line[i] <= 57))
@@ -163,13 +163,15 @@ int *get_color(char **read, char *to_find)
 	int	i;
 	int	j;
 
+	i = 0;
 	while (read[i]) 
 	{
 		j = 0;
 		while (read[i][j] && read[i][j] == ' ')
 			j++;
-		if (ft_strncmp(read[i][j]), to_find, ft_strlen(to_find) == 0)
+		if (ft_strncmp(read[i], to_find, ft_strlen(to_find)) == 0)
 			return (get_rgb_int_arr(clean_spaces(read[i]))); // Lo mismo, falta comprobacion creo
+		i++;
 	}
 	return (NULL);
 }
@@ -187,14 +189,16 @@ int	ft_arrlen(char **arr)
 bool is_empty(char *line) 
 {
 	int i;
+	int	not_space;
 
 	i = 0;
+	not_space = 0;
 	while (line[i] && line[i] != '\n') 
+	{
+		if (line[i] != ' ') not_space++;
 		i++;
-	if (i == 0)
-		return (true);
-	else 
-		return (false);
+	}
+	return (not_space == 0);
 }
 
 char **get_map(char **read) // contar que tex_lines llegue a 6 
@@ -205,22 +209,33 @@ char **get_map(char **read) // contar que tex_lines llegue a 6
 	int		blank_lines;
 
 	lines_in_file = ft_arrlen(read);
+	printf("lines in file: %d\n", lines_in_file);
 	tex_lines = 0;
 	blank_lines = 0;
 	while (*read && tex_lines != 6) 
 	{
 		if (is_empty(*read))
+		{
+			printf("blank: %s\n", *read);
 			blank_lines++;
-		else 
+		}
+		else
+		{
+			printf("text: %s\n", *read);
 			tex_lines++;
+		}
+		// printf("%s, is_empty: %d\n", *read, is_empty(*read));
 		read++;
 	}
-	while (is_empty(*read))
+	printf("blank_lines: %d, text_lines: %d\n", blank_lines, tex_lines);
+	while (*read && is_empty(*read))
 	{
 		read++;
 		blank_lines++;
 	}
 	clean_map = ft_calloc(sizeof(char *), (lines_in_file - tex_lines - blank_lines + 1));
+	if (!clean_map)
+		return (NULL);
 	ft_arrdup(clean_map, read);
 	return (clean_map);
 }
@@ -238,20 +253,21 @@ t_map *fill_map_info(char **read)
 	ret->ceiling_color = get_color(read, "C");
 	ret->map = get_map(read); // cargar el mapa y solo el mapa
 	if (!ret->floor_color || !ret->ceiling_color)
-		ft_error("Colors are incorrect");
-	if (!ret->no_text || !ret->so_text || !ret->ea_text || !ret->we_text);
-		ft_error("Texture paths are incorrect");
+		return (printf("Colors are incorrect\n"), exit(1), NULL);
+	if (!ret->no_text || !ret->so_text || !ret->ea_text || !ret->we_text)
+		return (printf("Texture paths are incorrect\n"), exit(1), NULL);
 	free(read);
 	return (ret);
 }
 
 int	is_valid_char(char c)
 {
-	return (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c = ' ');
+	return (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == ' ');
 }
 
-int check_spaces(char char) 
+int check_spaces(char c) 
 {
+	(void)c;
 	return (0);
 }
 
@@ -314,18 +330,24 @@ void check_valid_map(t_map *map)
 	int	j;
 
 	i = 0;
+	while (map->map[i])
+	{
+		printf("%s", map->map[i]);
+		i++;
+	}
+	exit(1);
 	map->height = get_line_nbr(map->map);
 	while (map->map[i])
 	{
 		j = 0;
 		while (map->map[i][j])
 		{
-			if ((i == 0 || i == height || check_spaces(map[i][j])) && map[i][j] != 1)
-				ft_error("Map is not enclosed");
-			else if (check_row(map[i]))
-				ft_error("Map is not enclosed");
-			else if (is_valid_char(map[i][j]))
-				ft_error("Wrong character");
+			if ((i == 0 || i == map->height || check_spaces(map->map[i][j])) && map->map[i][j] != 1)
+				(printf("Map is not enclosed 1\n"), exit(1));
+			else if (check_row(map->map[i]))
+				(printf("Map is not enclosed 2\n"), exit(1));
+			else if (is_valid_char(map->map[i][j]))
+				(printf("Wrong Character\n"), exit(1));
 			j++;
 		}
 		i++;
@@ -340,10 +362,11 @@ void parse_map(char *file, t_mlx *mlx)
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0 || check_file_extension(file))
-		ft_error("Issue with the file");
+		(printf("Issue with the file"), exit(1));
 	read = get_file_contents(fd);
+	printf("successful read\n");
 	if (!read) // read esta vacio
-		ft_error("Empty map");
+		(printf("Empty map"), exit(1));
 	mlx->map = fill_map_info(read);
 	check_valid_map(mlx->map); // aqui hacer las comprobaciones de si el mapa es valido
 }

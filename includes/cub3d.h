@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/10 10:33:52 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/10 11:42:57 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # include <unistd.h>
 # include <errno.h>
 # include <math.h>
+# include <stdbool.h>
 # include "../minilibx-linux/mlx.h"
 
 typedef struct	s_map {
@@ -85,8 +86,9 @@ typedef struct s_mlx
 int		init_player(t_mlx *mlx);
 void	display_player(t_player *plyr);
 
-/* free_mlx.c */
+/* utils.c */
 int		free_mlx(t_mlx *mlx);
+int		ft_error(char *errormsg, t_mlx *mlx);
 
 /* parse_map.c */
 void	parse_map(char *file, t_mlx *mlx);

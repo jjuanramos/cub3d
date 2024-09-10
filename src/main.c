@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:58:31 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/10 10:38:15 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/10 11:50:45 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,19 @@ void	start_game(t_mlx *mlx)
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
 }
 
-int	ft_error(char *errormsg, t_mlx *mlx)
-{
-	printf("%s\n", errormsg);
-	free_mlx(&mlx);
-	exit(1);
-}
-
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_mlx		mlx;
 
 	if (argc != 2)
-		ft_error("There must be two arguments");
-	parse_map(argv[1], map);
+		ft_error("There must be two arguments", &mlx);
+	parse_map(argv[1], &mlx);
+	printf("we got here mfers!");
+	exit(1);
 	// if (init_map(&mlx))
 	// 	return (1);
 	if (init_player(&mlx))
-		ft_error("Issue initiating player");
+		ft_error("Issue initiating player", &mlx);
 	display_player(mlx.plyr);
 	start_game(&mlx);
 	free_mlx(&mlx);
