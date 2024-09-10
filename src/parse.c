@@ -6,7 +6,7 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:28:43 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/09 13:38:03 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/10 10:20:02 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,10 @@ char **get_map(char **read) // contar que tex_lines llegue a 6
 		read++;
 	}
 	while (is_empty(*read))
+	{
 		read++;
+		blank_lines++;
+	}
 	clean_map = ft_calloc(sizeof(char *), (lines_in_file - tex_lines - blank_lines + 1));
 	ft_arrdup(clean_map, read);
 	return (clean_map);
@@ -248,7 +251,7 @@ t_map *fill_map_info(char **read)
 	ret->map = get_map(read); // cargar el mapa y solo el mapa
 	if (!ret->floor_color || !ret->ceiling_color)
 		error("Colors are incorrect");
-	else if (!ret->no_text || !ret->so_text || !ret->ea_text || !ret->we_text);
+	if (!ret->no_text || !ret->so_text || !ret->ea_text || !ret->we_text);
 		error("Texture paths are incorrect");
 	free(read);
 	return (ret);
