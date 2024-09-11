@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 10:45:05 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/10 12:37:27 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/11 10:32:45 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,31 +37,31 @@ int	is_pos(char c)
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-/*
-	We are assuming that N equals -1 in the y-axis,
-	and not 1.
-*/
 void	add_dir(t_player *plyr, char c)
 {
 	if (c == 'N')
 	{
 		plyr->dir_x = 0;
-		plyr->dir_y = -1;
+		plyr->dir_y = 1;
+		mlx->plyr->angle = M_PI / 2;
 	}
 	else if (c == 'E')
 	{
 		plyr->dir_x = 1;
 		plyr->dir_y = 0;
+		mlx->plyr->angle = 0;
 	}
 	else if (c == 'S')
 	{
 		plyr->dir_x = 0;
-		plyr->dir_y = 1;
+		plyr->dir_y = -1;
+		mlx->plyr->angle = 3 * M_PI / 2;
 	}
 	else if (c == 'W')
 	{
 		plyr->dir_x = -1;
 		plyr->dir_y = 0;
+		mlx->plyr->angle = M_PI;
 	}
 }
 
@@ -70,11 +70,9 @@ int	init_player(t_mlx *mlx)
 	mlx->plyr = ft_calloc(1, sizeof(t_player));
 	if (!mlx->plyr)
 		return (1);
-	mlx->plyr->fov_rd = (M_PI * FOV) / 180;
-	mlx->plyr->angle = M_PI;
 	if (fill_player(mlx))
 		return (1);
-	printf("filled player\n");
+	mlx->plyr->fod_rv = (mlx->plyr->angle * FOV) / 180;
 	mlx->plyr->plyr_x = TILE_SIZE * mlx->plyr->pos_x + TILE_SIZE / 2;
 	mlx->plyr->plyr_y = TILE_SIZE * mlx->plyr->pos_y + TILE_SIZE / 2;
 	return (0);

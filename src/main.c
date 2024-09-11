@@ -6,18 +6,21 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:58:31 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/11 09:54:29 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/11 10:11:42 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	start_game(t_mlx *mlx)
+int	game_loop(void *ml)
 {
-	mlx->mlx = mlx_init();
-	mlx->win = mlx_new_window(mlx->mlx, SCREENWIDTH, SCREENHEIGHT, "Cub3D");
-	mlx_loop(mlx->mlx);
+	t_mlx	*mlx;
+
+	mlx = ml;
+	mlx_destroy_image(mlx->mlx_p, mlx->img);
 	mlx->img = mlx_new_image(mlx->mlx_p, SCREENWIDTH, SCREENHEIGHT);
+	// hook_player(mlx);
+	cast_rays(mlx);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
 }
 
@@ -37,6 +40,11 @@ int	main(int argc, char **argv)
 		mlx.map->ceiling_color[2], mlx.map->floor_color[0],
 		mlx.map->floor_color[1], mlx.map->floor_color[2]
 		);
+	mlx.mlx = mlx_init();
+	mlx.win = mlx_new_window(mlx.mlx, SCREENWIDTH, SCREENHEIGHT, "Cub3D");
+	mlx_loop(mlx.mlx);
+	mlx_loop_hook(mlx.mlx_p, &game_loop, NULL);
+	// mlx_key_hook(mlx.win, &key_hook, NULL);
 	start_game(&mlx);
 	free_mlx(&mlx);
 	return (0);
