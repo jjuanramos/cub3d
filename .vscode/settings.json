@@ -9,7 +9,8 @@
 		"ios": "c",
 		"locale": "c",
 		"system_error": "c",
-		"tuple": "c"
+		"tuple": "c",
+		"cub3d.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }
