@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:58:31 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/11 10:11:42 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/12 09:48:17 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	main(int argc, char **argv)
 		mlx.map->floor_color[1], mlx.map->floor_color[2]
 		);
 	mlx.mlx = mlx_init();
+	if (!mlx.mlx)
+		ft_error("Could not initiate mlx", &mlx);
 	mlx.win = mlx_new_window(mlx.mlx, SCREENWIDTH, SCREENHEIGHT, "Cub3D");
 	mlx_loop(mlx.mlx);
 	mlx_loop_hook(mlx.mlx_p, &game_loop, NULL);
