@@ -6,11 +6,19 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 10:12:00 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/12 13:05:39 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/12 13:48:36 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+void	set_image_pixel(t_img *img, int x, int y, int color)
+{
+	int	pixel;
+
+	pixel = y * (img->size_line / 4) + x;
+	img->addr[pixel] = color;
+}
 
 int	check_orientation(t_mlx *mlx, float *next_inter, float *delta, int is_horizon)
 {
@@ -150,7 +158,7 @@ void	draw_wall(t_mlx *mlx, double t_pixel, double b_pixel, int x)
 
 	color = get_color(mlx);
 	while (t_pixel < b_pixel)
-		mlx_pixel_put(mlx->mlx_p, mlx->win, x, t_pixel++, color);
+		set_image_pixel(mlx->img, x, t_pixel++, color);
 }
 
 void	draw_floor_ceiling(t_mlx *mlx, double t_pixel, double b_pixel, int x)
@@ -159,10 +167,10 @@ void	draw_floor_ceiling(t_mlx *mlx, double t_pixel, double b_pixel, int x)
 
 	i = SCREENHEIGHT - 1;
 	while (i > b_pixel)
-		mlx_pixel_put(mlx->mlx_p, mlx->win, x, i--, 0xB99470FF); // cambiar por parsed colors
+		set_image_pixel(mlx->img, x, i--, 0xB99470FF);
 	i = 0;
 	while (i < t_pixel)
-		mlx_pixel_put(mlx->mlx_p, mlx->win, x, i++, 0x89CFF3FF);
+		set_image_pixel(mlx->img, x, i++, 0x89CFF3FF);
 }
 
 void	render(t_mlx *mlx, int x)

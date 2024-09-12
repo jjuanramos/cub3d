@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/12 13:29:42 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/12 13:49:10 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,12 @@
 # include <stdbool.h>
 # include "../minilibx-linux/mlx.h"
 
-typedef struct	s_map {
+typedef struct s_map
+{
 	char	**map;
-	char 	*no_text;
-	char 	*so_text;
-	char 	*we_text;
+	char	*no_text;
+	char	*so_text;
+	char	*we_text;
 	char	*ea_text;
 	// int		*floor_color;
 	// int		*ceiling_color;
@@ -79,10 +80,19 @@ typedef struct s_ray
 	int		is_horizontal;
 }			t_ray;
 
+typedef struct s_img
+{
+	void	*img;
+	int		*addr;
+	int		bits_per_pixel;
+	int		size_line;
+	int		endian;
+}			t_img;
+
 typedef struct s_mlx
 {
 	void		*mlx;
-	void		*img;
+	t_img		*img;
 	void		*win;
 	void		*mlx_p;
 	t_map		*map;
