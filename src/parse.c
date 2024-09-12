@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:28:43 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/10 12:31:34 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/12 13:03:16 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int *get_rgb_int_arr(char *line) //eg 255,1,99
 	return (rgb);
 }
 
-int *get_color(char **read, char *to_find)
+int *get_color_parse(char **read, char *to_find)
 {
 	int	i;
 	int	j;
@@ -240,8 +240,8 @@ t_map *fill_map_info(char **read)
 	ret->so_text = get_text(read, "SO ");
 	ret->we_text = get_text(read, "WE ");
 	ret->ea_text = get_text(read, "EA ");
-	ret->floor_color = get_color(read, "F");
-	ret->ceiling_color = get_color(read, "C");
+	ret->floor_color = get_color_parse(read, "F");
+	ret->ceiling_color = get_color_parse(read, "C");
 	ret->map = get_map(read); // cargar el mapa y solo el mapa
 	if (!ret->floor_color || !ret->ceiling_color)
 		return (printf("Colors are incorrect\n"), exit(1), NULL);

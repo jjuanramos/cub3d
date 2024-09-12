@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 10:12:00 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/12 12:32:54 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/12 13:05:39 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,32 @@ int	is_neg_orientation(t_mlx *mlx, int is_horizon)
 	return (0);
 }
 
+int	check_wall(float x, float y, t_mlx *mlx)
+{
+	int	x_map;
+	int	y_map;
+
+	if (x < 0 || y < 0)
+		return (1);
+	x_map = floor(x / TILE_SIZE);
+	y_map = floor(y / TILE_SIZE);
+	if (x_map > mlx->map->width
+		|| y_map > mlx->map->height)
+		return (1);
+	if (mlx->map->map[y_map] && x_map <= (int)ft_strlen(mlx->map->map[y_map]))
+		if (mlx->map->map[y_map][x_map] == '1')
+			return (1);
+	return (0);
+}
+
 double	get_h_inter(t_mlx *mlx, double norm_ngl)
 {
 	float	x_delta;
 	float	y_delta;
-	float 	y_next_inter;
+	float	y_next_inter;
 	float	x_next_inter;
 	int		corrector;
-	
+
 	y_delta = TILE_SIZE;
 	x_delta = TILE_SIZE * tan(norm_ngl);
 	y_next_inter = (floor(mlx->plyr->plyr_y / TILE_SIZE) * TILE_SIZE);
@@ -69,7 +87,8 @@ double	get_h_inter(t_mlx *mlx, double norm_ngl)
 		x_next_inter += x_delta;
 		y_next_inter += y_delta;
 	}
-	return (sqrt(pow(x_next_inter - mlx->plyr->plyr_x, 2) + pow(y_next_inter - mlx->plyr->plyr_y, 2))) 
+	printf("outta here\n");
+	return (sqrt(pow(x_next_inter - mlx->plyr->plyr_x, 2) + pow(y_next_inter - mlx->plyr->plyr_y, 2)));
 	// we return the hypothenuse (distance) of the triangle formed by the original point and the final intersection (the one that hits a wall).
 }
 
@@ -93,7 +112,7 @@ double	get_v_inter(t_mlx *mlx, double norm_ngl)
 		x_next_inter += x_delta;
 		y_next_inter += y_delta;
 	}
-	return (sqrt(pow(x_next_inter - mlx->plyr->plyr_x, 2) + pow(y_next_inter - mlx->plyr->plyr_y, 2))) 
+	return (sqrt(pow(x_next_inter - mlx->plyr->plyr_x, 2) + pow(y_next_inter - mlx->plyr->plyr_y, 2)));
 }
 
 double	normalize(double angle)
@@ -131,7 +150,7 @@ void	draw_wall(t_mlx *mlx, double t_pixel, double b_pixel, int x)
 
 	color = get_color(mlx);
 	while (t_pixel < b_pixel)
-		mlx_put_pixel(mlx->img, x, t_pixel++, color);
+		mlx_pixel_put(mlx->mlx_p, mlx->win, x, t_pixel++, color);
 }
 
 void	draw_floor_ceiling(t_mlx *mlx, double t_pixel, double b_pixel, int x)
@@ -140,10 +159,10 @@ void	draw_floor_ceiling(t_mlx *mlx, double t_pixel, double b_pixel, int x)
 
 	i = SCREENHEIGHT - 1;
 	while (i > b_pixel)
-		mlx_put_pixel(mlx->img, x, i--, 0xB99470FF); // cambiar por parsed colors
+		mlx_pixel_put(mlx->mlx_p, mlx->win, x, i--, 0xB99470FF); // cambiar por parsed colors
 	i = 0;
 	while (i < t_pixel)
-		mlx_put_pixel(mlx->img, x, i++, 0x89CFF3FF);
+		mlx_pixel_put(mlx->mlx_p, mlx->win, x, i++, 0x89CFF3FF);
 }
 
 void	render(t_mlx *mlx, int x)
@@ -189,5 +208,4 @@ void	cast_rays(t_mlx *mlx)
 		mlx->ray->ray_ngl += (mlx->plyr->fov_rd / SCREENWIDTH);
 		i++;
 	}
-
 }
