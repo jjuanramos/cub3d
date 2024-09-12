@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 10:15:46 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/10 11:43:09 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/12 15:55:38 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,24 @@ int	free_mlx(t_mlx *mlx)
 		free(mlx->map->map);
 		free(mlx->map);
 	}
-	mlx_destroy_window(mlx->mlx, mlx->win);
+	if (mlx->mlx && mlx->win)
+		mlx_destroy_window(mlx->mlx, mlx->win);
 	return (0);
 }
 
 int	ft_error(char *errormsg, t_mlx *mlx)
 {
 	printf("%s\n", errormsg);
-	free_mlx(mlx);
+	if (mlx)
+		free_mlx(mlx);
 	exit(1);
+}
+
+double	normalize(double angle)
+{
+	if (angle < 0)
+		return (angle + 2 * M_PI);
+	else if (angle > 2 * M_PI)
+		return (angle - 2 * M_PI);
+	return (angle);
 }

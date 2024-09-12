@@ -6,7 +6,7 @@
 #    By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/15 16:43:25 by juramos           #+#    #+#              #
-#    Updated: 2024/09/12 13:23:27 by juramos          ###   ########.fr        #
+#    Updated: 2024/09/12 15:39:34 by juramos          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ CFLAGS 		= 	-Wall -Werror -Wextra -g3 -fsanitize=address
 
 # Sources
 SRC_DIR 	= 	src/
-SRC_FILES 	= 	main init_player utils parse raycasting
+SRC_FILES 	= 	main init_player utils parse raycasting render \
+				clean_init mlx_loop
 				
 SRC 		=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 

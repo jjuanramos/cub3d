@@ -6,26 +6,22 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:58:31 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/12 13:53:39 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/12 15:55:47 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	game_loop(void *ml)
+void	debug_main(t_mlx *mlx)
 {
-	t_mlx	*mlx;
-
-	mlx = ml;
-	mlx_destroy_image(mlx->mlx_p, mlx->img);
-	mlx_clear_window(mlx->mlx_p, mlx->win);
-	mlx->img->img = mlx_new_image(mlx->mlx_p, SCREENWIDTH, SCREENHEIGHT);
-	mlx->img->addr = (int *)mlx_get_data_addr(mlx->img->img, &(mlx->img->bits_per_pixel),
-		&(mlx->img->size_line), &(mlx->img->endian));
-	// hook_player(mlx);
-	cast_rays(mlx);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
-	return (0);
+	display_player(mlx->plyr);
+	printf("textures: %s %s %s %s\n",
+		mlx->map->no_text, mlx->map->so_text,
+		mlx->map->we_text, mlx->map->ea_text
+		// mlx->map->ceiling_color[0], mlx->map->ceiling_color[1],
+		// mlx->map->ceiling_color[2], mlx->map->floor_color[0],
+		// mlx->map->floor_color[1], mlx.map->floor_color[2]
+		);
 }
 
 int	main(int argc, char **argv)
@@ -33,26 +29,10 @@ int	main(int argc, char **argv)
 	t_mlx		mlx;
 
 	if (argc != 2)
-		ft_error("There must be two arguments\n", &mlx);
-	parse_map(argv[1], &mlx);
-	if (init_player(&mlx))
-		ft_error("Issue initiating player\n", &mlx);
-	display_player(mlx.plyr);
-	printf("textures: %s %s %s %s\n",
-		mlx.map->no_text, mlx.map->so_text, mlx.map->we_text, mlx.map->ea_text
-		// mlx.map->ceiling_color[0], mlx.map->ceiling_color[1],
-		// mlx.map->ceiling_color[2], mlx.map->floor_color[0],
-		// mlx.map->floor_color[1], mlx.map->floor_color[2]
-		);
-	mlx.mlx = mlx_init();
-	if (!mlx.mlx)
-		ft_error("Could not initiate mlx", &mlx);
-	mlx.win = mlx_new_window(mlx.mlx, SCREENWIDTH, SCREENHEIGHT, "Cub3D");
-	mlx_loop_hook(mlx.mlx_p, &game_loop, NULL);
-	// mlx_key_hook(mlx.win, &key_hook, NULL);
-	//start_game(&mlx);
-	mlx_loop(mlx.mlx);
-	free_mlx(&mlx);
+		ft_error("There must be two arguments.", NULL);
+	init_mlx(&mlx, argv);
+	debug_main(&mlx);
+	start_game(&mlx);
 	return (0);
 }
 

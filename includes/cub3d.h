@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/12 13:49:10 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/12 15:52:30 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,18 +100,29 @@ typedef struct s_mlx
 	t_player	*plyr;
 }			t_mlx;
 
-/* init_player.c */
+/* init_player */
 int		init_player(t_mlx *mlx);
 void	display_player(t_player *plyr);
 
-/* utils.c */
+/* utils */
 int		free_mlx(t_mlx *mlx);
 int		ft_error(char *errormsg, t_mlx *mlx);
+double	normalize(double angle);
 
-/* parse_map.c */
+/* parse_map */
 void	parse_map(char *file, t_mlx *mlx);
 
 /* raycasting */
 void	cast_rays(t_mlx *mlx);
+
+/* render */
+void	render(t_mlx *mlx, int x);
+
+/* clean_init */
+void	init_empty_player(t_player *plyr);
+void	init_mlx(t_mlx *mlx, char **argv);
+
+/* mlx_loop */
+void	start_game(t_mlx *mlx);
 
 #endif
