@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 10:45:05 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/12 15:54:30 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/12 16:35:43 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ void	add_dir(t_player *plyr, char c)
 
 int	init_player(t_mlx *mlx)
 {
+	mlx->plyr = ft_calloc(1, sizeof(t_player));
+	if (!mlx->plyr)
+		return (1);
 	init_empty_player(mlx->plyr);
 	if (fill_player(mlx))
 		return (1);

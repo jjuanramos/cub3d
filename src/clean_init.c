@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:28:46 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/12 16:23:56 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/12 16:44:56 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,39 @@ static void	init_empty_mlx(t_mlx *mlx)
 	mlx->plyr = NULL;
 }
 
-static void	init_empty_img(t_img *img)
+static int	init_empty_img(t_mlx *mlx)
 {
-	img->img = NULL;
-	img->addr = NULL;
-	img->bits_per_pixel = 0;
-	img->size_line = 0;
-	img->endian = 0;
+	mlx->img = ft_calloc(1, sizeof(t_img));
+	if (!mlx->img)
+		return (1);
+	mlx->img->img = NULL;
+	mlx->img->addr = NULL;
+	mlx->img->bits_per_pixel = 0;
+	mlx->img->size_line = 0;
+	mlx->img->endian = 0;
+	return (0);
+}
+
+static int	init_empty_ray(t_mlx *mlx)
+{
+	mlx->ray = ft_calloc(1, sizeof(t_ray));
+	if (!mlx->ray)
+		return (1);
+	mlx->ray->distance = 0;
+	mlx->ray->is_horizontal = 0;
+	mlx->ray->ray_ngl = 0;
+	return (0);
 }
 
 void	init_mlx(t_mlx *mlx, char **argv)
 {
 	init_empty_mlx(mlx);
 	parse_map(argv[1], mlx);
-	mlx->plyr = ft_calloc(1, sizeof(t_player));
-	if (!mlx->plyr)
-		ft_error("Issue initiating player\n", mlx);
 	if (init_player(mlx))
 		ft_error("Issue initiating player\n", mlx);
-	mlx->img = ft_calloc(1, sizeof(t_img));
-	if (!mlx->img)
+	if (init_empty_img(mlx))
 		ft_error("Issue initiating image\n", mlx);
-	mlx->ray = ft_calloc(1, sizeof(t_ray));
-	if (!mlx->ray)
+	if (init_empty_ray(mlx))
 		ft_error("Issue initiating ray\n", mlx);
-	init_empty_img(mlx->img);
 }
 

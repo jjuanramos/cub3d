@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 10:12:00 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/12 16:24:10 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/12 16:45:12 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ void	cast_rays(t_mlx *mlx)
 
 	i = 0;
 	mlx->ray->ray_ngl = mlx->plyr->angle - (mlx->plyr->fov_rd / 2);
-	mlx->ray->is_horizontal = 0;
 	while (i < SCREENWIDTH)
 	{
 		h_inter = get_h_inter(mlx, normalize(mlx->ray->ray_ngl));

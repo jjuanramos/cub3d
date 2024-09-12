@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:36:51 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/12 16:28:57 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/12 16:47:02 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ int	game_loop(void *ml)
 	t_mlx	*mlx;
 
 	mlx = (t_mlx *)ml;
-
-	if (mlx && mlx->mlx && mlx->img && mlx->img->img)
-		mlx_destroy_image(mlx->mlx, mlx->img->img);
 	// mlx_clear_window(mlx->mlx, mlx->win);
 	mlx->img->img = mlx_new_image(mlx->mlx, SCREENWIDTH, SCREENHEIGHT);
 	if (!mlx->img->img)
@@ -30,6 +27,7 @@ int	game_loop(void *ml)
 	// hook_player(mlx);
 	cast_rays(mlx);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img->img, 0, 0);
+	mlx_destroy_image(mlx->mlx, mlx->img->img);
 	return (0);
 }
 
