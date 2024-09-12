@@ -6,7 +6,7 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:58:31 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/12 09:48:17 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/12 12:28:32 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	game_loop(void *ml)
 	// hook_player(mlx);
 	cast_rays(mlx);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -47,7 +48,7 @@ int	main(int argc, char **argv)
 	mlx_loop(mlx.mlx);
 	mlx_loop_hook(mlx.mlx_p, &game_loop, NULL);
 	// mlx_key_hook(mlx.win, &key_hook, NULL);
-	start_game(&mlx);
+	//start_game(&mlx);
 	free_mlx(&mlx);
 	return (0);
 }

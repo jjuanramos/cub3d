@@ -6,7 +6,7 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/12 09:54:19 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/12 12:27:16 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,8 @@ int		ft_error(char *errormsg, t_mlx *mlx);
 
 /* parse_map.c */
 void	parse_map(char *file, t_mlx *mlx);
+
+/* raycasting */
+void	cast_rays(t_mlx *mlx);
 
 #endif

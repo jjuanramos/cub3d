@@ -6,13 +6,13 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 10:12:00 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/12 12:24:29 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/12 12:32:54 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	check_orientation(t_mlx *mlx, int *next_inter, int *delta, int is_horizon)
+int	check_orientation(t_mlx *mlx, float *next_inter, float *delta, int is_horizon)
 {
 	if (is_horizon)
 	{
@@ -37,11 +37,15 @@ int	check_orientation(t_mlx *mlx, int *next_inter, int *delta, int is_horizon)
 int	is_neg_orientation(t_mlx *mlx, int is_horizon)
 {
 	if (is_horizon)
+	{
 		if (!(mlx->plyr->angle >= 0 && mlx->plyr->angle < M_PI))
 			return (1);
+	}
 	else 
+	{
 		if ((mlx->plyr->angle >= M_PI / 2 && mlx->plyr->angle < (3 * M_PI / 2)))
 			return (1);
+	}
 	return (0);
 }
 
@@ -136,7 +140,7 @@ void	draw_floor_ceiling(t_mlx *mlx, double t_pixel, double b_pixel, int x)
 
 	i = SCREENHEIGHT - 1;
 	while (i > b_pixel)
-		mlx_put_pixel(mlx->img, x, i--, 0xB99470FF);
+		mlx_put_pixel(mlx->img, x, i--, 0xB99470FF); // cambiar por parsed colors
 	i = 0;
 	while (i < t_pixel)
 		mlx_put_pixel(mlx->img, x, i++, 0x89CFF3FF);

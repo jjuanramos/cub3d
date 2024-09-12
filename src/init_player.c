@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 10:45:05 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/11 10:32:45 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/12 12:31:36 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,25 @@ void	add_dir(t_player *plyr, char c)
 	{
 		plyr->dir_x = 0;
 		plyr->dir_y = 1;
-		mlx->plyr->angle = M_PI / 2;
+		plyr->angle = M_PI / 2;
 	}
 	else if (c == 'E')
 	{
 		plyr->dir_x = 1;
 		plyr->dir_y = 0;
-		mlx->plyr->angle = 0;
+		plyr->angle = 0;
 	}
 	else if (c == 'S')
 	{
 		plyr->dir_x = 0;
 		plyr->dir_y = -1;
-		mlx->plyr->angle = 3 * M_PI / 2;
+		plyr->angle = 3 * M_PI / 2;
 	}
 	else if (c == 'W')
 	{
 		plyr->dir_x = -1;
 		plyr->dir_y = 0;
-		mlx->plyr->angle = M_PI;
+		plyr->angle = M_PI;
 	}
 }
 
@@ -72,7 +72,7 @@ int	init_player(t_mlx *mlx)
 		return (1);
 	if (fill_player(mlx))
 		return (1);
-	mlx->plyr->fod_rv = (mlx->plyr->angle * FOV) / 180;
+	mlx->plyr->fov_rd = (mlx->plyr->angle * FOV) / 180;
 	mlx->plyr->plyr_x = TILE_SIZE * mlx->plyr->pos_x + TILE_SIZE / 2;
 	mlx->plyr->plyr_y = TILE_SIZE * mlx->plyr->pos_y + TILE_SIZE / 2;
 	return (0);
