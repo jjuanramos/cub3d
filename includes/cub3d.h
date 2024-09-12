@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/12 12:27:16 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/12 13:29:42 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ typedef struct	s_map {
 	char 	*so_text;
 	char 	*we_text;
 	char	*ea_text;
-	int		*floor_color;
-	int		*ceiling_color;
+	// int		*floor_color;
+	// int		*ceiling_color;
 	int		width;
 	int		height;	
 }				t_map;
