@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 10:12:00 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/12 15:52:16 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/12 16:24:10 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ double	get_h_inter(t_mlx *mlx, double norm_ngl)
 		x_next_inter += x_delta;
 		y_next_inter += y_delta;
 	}
-	printf("outta here\n");
 	return (sqrt(pow(x_next_inter - mlx->plyr->plyr_x, 2) + pow(y_next_inter - mlx->plyr->plyr_y, 2)));
 	// we return the hypothenuse (distance) of the triangle formed by the original point and the final intersection (the one that hits a wall).
 }

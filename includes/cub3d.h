@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/12 15:52:30 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/12 16:03:10 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ typedef struct s_mlx
 	void		*mlx;
 	t_img		*img;
 	void		*win;
-	void		*mlx_p;
 	t_map		*map;
 	t_ray		*ray;
 	t_player	*plyr;

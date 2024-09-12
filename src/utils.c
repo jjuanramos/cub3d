@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 10:15:46 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/12 15:55:38 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/12 16:08:22 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	free_mlx(t_mlx *mlx)
 
 	if (mlx->plyr)
 		free(mlx->plyr);
+	if (mlx->img)
+		free(mlx->img);
 	if (mlx->map)
 	{
 		i = -1;
