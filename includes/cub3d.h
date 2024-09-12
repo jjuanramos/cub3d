@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/11 12:32:03 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/12 09:54:19 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_ray
 {
 	double	ray_ngl;
 	double	distance;
-	int		flag;
+	int		is_horizontal;
 }			t_ray;
 
 typedef struct s_mlx
@@ -86,7 +86,7 @@ typedef struct s_mlx
 	void		*win;
 	void		*mlx_p;
 	t_map		*map;
-	t_ray		*rays;
+	t_ray		*ray;
 	t_player	*plyr;
 }			t_mlx;
 
