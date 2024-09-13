@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:23:11 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/13 10:28:29 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/13 11:21:28 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,19 @@ static void	draw_floor_ceiling(t_mlx *mlx, double t_pixel,
 {
 	int	i;
 
-	i = SCREENHEIGHT - 1;
-	while (i > b_pixel)
+	i = b_pixel;
+	// printf("i: %d\nb_pixel:%f\nt_pixel:%f\n",
+		// i, b_pixel, t_pixel);
+	while (i < SCREENHEIGHT)
 	{
-		// printf("got floor");
-		set_image_pixel(mlx->img, x, i--, 0xB99470FF);
+		printf("got floor");
+		set_image_pixel(mlx->img, x, i++, 0xB99470FF);
 	}
-	i = 0;
-	while (i < t_pixel)
+	i = t_pixel;
+	while (i > 0)
 	{
-		// printf("got ceiling");
-		set_image_pixel(mlx->img, x, i++, 0x89CFF3FF);
+		printf("got ceiling");
+		set_image_pixel(mlx->img, x, i--, 0x89CFF3FF);
 	}
 }
 // (TILE_SIZE / distance): scales wall height by distance;
@@ -98,11 +100,12 @@ void	render(t_mlx *mlx, int x)
 	double	b_pixel;
 	double	t_pixel;
 
-	mlx->ray->distance *= cos(normalize(mlx->ray->ray_ngl - mlx->plyr->angle));
+	mlx->ray->distance *= cos(normalize(mlx->ray->ray_ngl - mlx->plyr->angle)); // to prevent fisheye
 	wall_height = (TILE_SIZE / mlx->ray->distance)
 		* ((SCREENWIDTH / 2) / tan(mlx->plyr->fov_rd / 2));
 	b_pixel = (SCREENHEIGHT / 2) + (wall_height / 2);
 	t_pixel = (SCREENHEIGHT / 2) - (wall_height / 2);
+	// printf("b_pixel: %f, t_pixel: %f\n", b_pixel, t_pixel);
 	if (b_pixel > SCREENHEIGHT)
 		b_pixel = SCREENHEIGHT;
 	if (t_pixel < 0)

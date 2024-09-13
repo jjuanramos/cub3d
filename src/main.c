@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:58:31 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/12 15:55:47 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/13 11:29:03 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	debug_main(t_mlx *mlx)
 {
+	int y = 0;
+
 	display_player(mlx->plyr);
 	printf("textures: %s %s %s %s\n",
 		mlx->map->no_text, mlx->map->so_text,
@@ -22,6 +24,11 @@ void	debug_main(t_mlx *mlx)
 		// mlx->map->ceiling_color[2], mlx->map->floor_color[0],
 		// mlx->map->floor_color[1], mlx.map->floor_color[2]
 		);
+	while (mlx->map->map[y])
+	{
+		printf("%s", mlx->map->map[y]);
+		y++;
+	}
 }
 
 int	main(int argc, char **argv)
