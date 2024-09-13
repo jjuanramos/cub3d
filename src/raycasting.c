@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 10:12:00 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/13 11:31:42 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/13 11:38:08 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,12 @@ static int	check_wall(float x, float y, t_mlx *mlx)
 		return (1);
 	x_map = floor(x / TILE_SIZE);
 	y_map = floor(y / TILE_SIZE);
-	printf("passed this point");
 	if (x_map > mlx->map->width
 		|| y_map > mlx->map->height)
 		return (1);
-	printf("passed this other point");
-	printf("x_map: %d, else: %d", x_map, (int)ft_strlen(mlx->map->map[y_map]));
-	exit(0);
 	if (mlx->map->map[y_map] && x_map <= (int)ft_strlen(mlx->map->map[y_map]))
 		if (mlx->map->map[y_map][x_map] == '1')
 			return (1);
-	printf("passed last point");
-	exit(0);
 	return (0);
 }
 
