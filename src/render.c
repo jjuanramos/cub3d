@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:23:11 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/13 11:21:28 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/13 11:42:31 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,6 @@ static void	draw_wall(t_mlx *mlx, double t_pixel, double b_pixel, int x)
 {
 	int	color;
 
-	// printf("drawing wall...\n");
-	// printf("is horizontal? %d\n", mlx->ray->is_horizontal);
-	// printf("angle: %f\n", normalize(mlx->ray->ray_ngl));
 	color = get_color(mlx);
 	while (t_pixel < b_pixel)
 		set_image_pixel(mlx->img, x, t_pixel++, color);
@@ -82,13 +79,13 @@ static void	draw_floor_ceiling(t_mlx *mlx, double t_pixel,
 		// i, b_pixel, t_pixel);
 	while (i < SCREENHEIGHT)
 	{
-		printf("got floor");
+		// printf("got floor");
 		set_image_pixel(mlx->img, x, i++, 0xB99470FF);
 	}
 	i = t_pixel;
 	while (i > 0)
 	{
-		printf("got ceiling");
+		// printf("got ceiling");
 		set_image_pixel(mlx->img, x, i--, 0x89CFF3FF);
 	}
 }
@@ -105,11 +102,11 @@ void	render(t_mlx *mlx, int x)
 		* ((SCREENWIDTH / 2) / tan(mlx->plyr->fov_rd / 2));
 	b_pixel = (SCREENHEIGHT / 2) + (wall_height / 2);
 	t_pixel = (SCREENHEIGHT / 2) - (wall_height / 2);
-	// printf("b_pixel: %f, t_pixel: %f\n", b_pixel, t_pixel);
 	if (b_pixel > SCREENHEIGHT)
 		b_pixel = SCREENHEIGHT;
 	if (t_pixel < 0)
 		t_pixel = 0;
 	draw_wall(mlx, t_pixel, b_pixel, x);
-	draw_floor_ceiling(mlx, t_pixel, b_pixel, x);
+	// draw_floor_ceiling(mlx, t_pixel, b_pixel, x);
+	(void)&draw_floor_ceiling;
 }

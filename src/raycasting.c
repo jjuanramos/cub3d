@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 10:12:00 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/13 11:38:08 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/13 11:57:33 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ double	get_v_inter(t_mlx *mlx, double norm_ngl)
 	x_next_inter = (floor(mlx->plyr->plyr_x / TILE_SIZE) * TILE_SIZE);
 	y_next_inter = mlx->plyr->plyr_y + (x_next_inter - mlx->plyr->plyr_x) * tan(norm_ngl);
 	corrector = check_orientation(norm_ngl, &x_next_inter, &x_delta, 0);
-	if ((is_neg_orientation(norm_ngl, 0) && y_delta > 0) || (!is_neg_orientation(norm_ngl, 0) && y_delta < 0))
+	if ((is_neg_orientation(norm_ngl, 0) && y_delta < 0) || (!is_neg_orientation(norm_ngl, 0) && y_delta > 0))
 		y_delta *= -1;
 	while (!check_wall(x_next_inter + corrector, y_next_inter, mlx))
 	{
