@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 10:45:05 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/12 16:35:43 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/13 10:32:56 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	init_player(t_mlx *mlx)
 	init_empty_player(mlx->plyr);
 	if (fill_player(mlx))
 		return (1);
-	mlx->plyr->fov_rd = (mlx->plyr->angle * FOV) / 180;
+	mlx->plyr->fov_rd = (FOV * M_PI) / 180;
 	mlx->plyr->plyr_x = TILE_SIZE * mlx->plyr->pos_x + TILE_SIZE / 2;
 	mlx->plyr->plyr_y = TILE_SIZE * mlx->plyr->pos_y + TILE_SIZE / 2;
 	return (0);

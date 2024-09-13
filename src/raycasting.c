@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 10:12:00 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/12 16:45:12 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/13 10:59:07 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	check_orientation(t_mlx *mlx, float *next_inter,
 {
 	if (is_horizon)
 	{
-		if (mlx->plyr->angle >= 0 && mlx->plyr->angle < M_PI) // checks if the ray is facing downwards
+		if (mlx->plyr->angle > 0 && mlx->plyr->angle < M_PI) // checks if the ray is facing downwards
 		{
 			*next_inter += TILE_SIZE;	// moves the y intersection point to a the horizontal line below
 			return (1);
@@ -31,7 +31,7 @@ static int	check_orientation(t_mlx *mlx, float *next_inter,
 	}
 	else 
 	{
-		if (!((mlx->plyr->angle >= M_PI / 2 ) && (mlx->plyr->angle < (3 * M_PI / 2))))
+		if (!((mlx->plyr->angle > M_PI / 2 ) && (mlx->plyr->angle < (3 * M_PI / 2))))
 		{
 			*next_inter += TILE_SIZE;
 			return (1);
@@ -45,12 +45,12 @@ static int	is_neg_orientation(t_mlx *mlx, int is_horizon)
 {
 	if (is_horizon)
 	{
-		if (!(mlx->plyr->angle >= 0 && mlx->plyr->angle < M_PI))
+		if (!(mlx->plyr->angle > 0 && mlx->plyr->angle < M_PI))
 			return (1);
 	}
 	else
 	{
-		if ((mlx->plyr->angle >= M_PI / 2 && mlx->plyr->angle < (3 * M_PI / 2)))
+		if ((mlx->plyr->angle > M_PI / 2 && mlx->plyr->angle < (3 * M_PI / 2)))
 			return (1);
 	}
 	return (0);
@@ -83,13 +83,13 @@ double	get_h_inter(t_mlx *mlx, double norm_ngl)
 	int		corrector;
 
 	y_delta = TILE_SIZE;
-	x_delta = TILE_SIZE * tan(norm_ngl);
+	x_delta = TILE_SIZE / tan(norm_ngl);
 	y_next_inter = (floor(mlx->plyr->plyr_y / TILE_SIZE) * TILE_SIZE);
 	x_next_inter = mlx->plyr->plyr_x + (y_next_inter - mlx->plyr->plyr_y) / tan(norm_ngl);
 	corrector = check_orientation(mlx, &y_next_inter, &y_delta, 1);
-	if ((is_neg_orientation(mlx, 0) && x_delta > 0) || (!is_neg_orientation(mlx, 0) && x_delta < 0))
+	if ((is_neg_orientation(mlx, 1) && x_delta > 0) || (!is_neg_orientation(mlx, 1) && x_delta < 0))
 		x_delta *= -1;
-	while (!check_wall(x_next_inter, y_next_inter + corrector, mlx))
+	while (!check_wall(x_next_inter + corrector, y_next_inter, mlx))
 	{
 		x_next_inter += x_delta;
 		y_next_inter += y_delta;
@@ -102,16 +102,16 @@ double	get_v_inter(t_mlx *mlx, double norm_ngl)
 {
 	float	x_delta;
 	float	y_delta;
-	float 	y_next_inter;
+	float	y_next_inter;
 	float	x_next_inter;
 	int		corrector;
-	
+
 	x_delta = TILE_SIZE;
 	y_delta = TILE_SIZE * tan(norm_ngl);
 	x_next_inter = (floor(mlx->plyr->plyr_x / TILE_SIZE) * TILE_SIZE);
-	y_next_inter = mlx->plyr->plyr_y + (x_next_inter - mlx->plyr->plyr_x) / tan(norm_ngl);
-	corrector = check_orientation(mlx, &x_next_inter, &x_delta, 1);
-	if ((is_neg_orientation(mlx, 1) && y_delta > 0) || (!is_neg_orientation(mlx, 1) && y_delta < 0))
+	y_next_inter = mlx->plyr->plyr_y + (x_next_inter - mlx->plyr->plyr_x) * tan(norm_ngl);
+	corrector = check_orientation(mlx, &x_next_inter, &x_delta, 0);
+	if ((is_neg_orientation(mlx, 0) && y_delta > 0) || (!is_neg_orientation(mlx, 0) && y_delta < 0))
 		y_delta *= -1;
 	while (!check_wall(y_next_inter, x_next_inter + corrector, mlx))
 	{
