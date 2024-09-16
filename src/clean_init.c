@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:28:46 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/13 11:36:50 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/16 11:30:47 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	init_mlx(t_mlx *mlx, char **argv)
 {
 	init_empty_mlx(mlx);
 	parse_map(argv[1], mlx);
-	mlx->map->width = 8;
+	mlx->map->width = 9;
 	mlx->map->height = 5;
 	if (init_player(mlx))
 		ft_error("Issue initiating player\n", mlx);
