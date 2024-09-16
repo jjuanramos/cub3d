@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/16 12:00:29 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:42:21 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,40 @@
 # define SCREENHEIGHT 480
 # define TILE_SIZE 30
 # define FOV 60
+# define ROTATION_SPEED 0.015
+# define PLAYER_SPEED 4
 
 /*	Buttons & Keys	*/
-# define CLOSE_BUTTON 17
-# define KEY_ESC 53
-# define KEY_W 13
-# define KEY_D 2
-# define KEY_UP 126
-# define KEY_DOWN 125
-# define KEY_LEFT 123
-# define KEY_RIGHT 124
-# define KEY_SPACE 49
-# define MOUSE_WHEEL_UP 4
-# define MOUSE_WHEEL_DOWN 5
-# define MOUSE_WHEEL_BTN 3
-# define MOUSE_BTN 1
-# define MOUSE_BTN_2 3
-# define KEY_K 107
+# ifdef __APPLE__
+# include <TargetConditionals.h>
+#if TARGET_OS_MAC
+	# define KEY_ESC 61
+	# define KEY_A 8
+	# define KEY_W 21
+	# define KEY_S 9
+	# define KEY_D 10
+	# define KEY_LEFT 131
+	# define KEY_RIGHT 132
+	#define SYSTEM_IS_MACOS 1
+#endif
+# endif
+
+// Check if the system is Linux
+#ifdef __linux__
+#define SYSTEM_IS_LINUX 1
+# define KEY_ESC 9
+# define KEY_A 38
+# define KEY_W 25
+# define KEY_S 39
+# define KEY_D 40
+# define KEY_LEFT 100
+# define KEY_RIGHT 102
+#endif
+
+/*	Key events */
+# define ON_KEY_DOWN 2
+# define ON_KEY_UP 3
+# define ON_DESTROY 17
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -71,6 +88,8 @@ typedef struct s_player
 	float	plyr_y;
 	float	fov_rd;
 	float	angle;
+	int		l_r;
+	int		u_d;
 }			t_player;
 
 typedef struct s_ray
@@ -123,5 +142,11 @@ void	init_mlx(t_mlx *mlx, char **argv);
 
 /* mlx_loop */
 void	start_game(t_mlx *mlx);
+
+/* movement */
+int		key_push(int keycode, t_mlx *mlx);
+int		key_release(int keycode, t_mlx *mlx);
+int		key_destroy(t_mlx *mlx);
+void	update_player_mvmt(t_mlx *mlx, int move_x, int move_y);
 
 #endif

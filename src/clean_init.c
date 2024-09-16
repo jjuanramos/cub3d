@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:28:46 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/16 11:30:47 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:31:25 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	init_empty_player(t_player *plyr)
 	plyr->dir_x = 0;
 	plyr->dir_y = 0;
 	plyr->rot_dir = 0;
+	plyr->u_d = 0;
+	plyr->l_r = 0;
 	plyr->plyr_x = 0;
 	plyr->plyr_y = 0;
 	plyr->fov_rd = 0;
