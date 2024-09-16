@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/16 13:42:21 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/16 13:55:25 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void	render(t_mlx *mlx, int x);
 void	init_empty_player(t_player *plyr);
 void	init_mlx(t_mlx *mlx, char **argv);
 
-/* mlx_loop */
+/* game_loop */
 void	start_game(t_mlx *mlx);
 
 /* movement */
