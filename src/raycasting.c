@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 10:12:00 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/13 12:11:54 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/16 10:42:30 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	is_neg_orientation(double norm_ngl, int is_horizon)
 {
 	if (is_horizon)
 	{
-		if (!(norm_ngl > 0 && norm_ngl < M_PI))
+		if ((norm_ngl > 0 && norm_ngl < M_PI))
 			return (1);
 	}
 	else
@@ -65,10 +65,10 @@ static int	check_wall(float x, float y, t_mlx *mlx)
 		return (1);
 	x_map = floor(x / TILE_SIZE);
 	y_map = floor(y / TILE_SIZE);
-	if (x_map > mlx->map->width
-		|| y_map > mlx->map->height)
+	if (x_map > mlx->map->width - 1
+		|| y_map > mlx->map->height - 1)
 		return (1);
-	if (mlx->map->map[y_map] && x_map <= (int)ft_strlen(mlx->map->map[y_map]))
+	if (mlx->map->map[y_map] && x_map < (int)ft_strlen(mlx->map->map[y_map]))
 		if (mlx->map->map[y_map][x_map] == '1')
 			return (1);
 	return (0);

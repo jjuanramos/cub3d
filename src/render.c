@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:23:11 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/13 12:13:03 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/16 10:18:40 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,4 @@ void	render(t_mlx *mlx, int x)
 		t_pixel = 0;
 	draw_wall(mlx, t_pixel, b_pixel, x);
 	draw_floor_ceiling(mlx, t_pixel, b_pixel, x);
-	(void)&draw_floor_ceiling;
 }
