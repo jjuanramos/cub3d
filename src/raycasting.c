@@ -6,7 +6,7 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 10:12:00 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/16 11:41:04 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/16 12:13:32 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ double	get_h_inter(t_mlx *mlx, double norm_ngl)
 	y_delta = TILE_SIZE;
 	x_delta = TILE_SIZE / tan(norm_ngl);
 	y_next_inter = (floor(mlx->plyr->plyr_y / TILE_SIZE) * TILE_SIZE);
-	x_next_inter = mlx->plyr->plyr_x + (y_next_inter - mlx->plyr->plyr_y) / tan(norm_ngl);
 	corrector = check_orientation(norm_ngl, &y_next_inter, &y_delta, 1);
+	x_next_inter = mlx->plyr->plyr_x + (y_next_inter - mlx->plyr->plyr_y) / tan(norm_ngl);
 	if ((is_neg_orientation(norm_ngl, 0) && x_delta > 0) || (!is_neg_orientation(norm_ngl, 0) && x_delta < 0))
 		x_delta *= -1;
 	while (!check_wall(x_next_inter, y_next_inter + corrector, mlx))
@@ -109,8 +109,8 @@ double	get_v_inter(t_mlx *mlx, double norm_ngl)
 	x_delta = TILE_SIZE;
 	y_delta = TILE_SIZE * tan(norm_ngl);
 	x_next_inter = (floor(mlx->plyr->plyr_x / TILE_SIZE) * TILE_SIZE);
-	y_next_inter = mlx->plyr->plyr_y + (x_next_inter - mlx->plyr->plyr_x) * tan(norm_ngl);
 	corrector = check_orientation(norm_ngl, &x_next_inter, &x_delta, 0);
+	y_next_inter = mlx->plyr->plyr_y + (x_next_inter - mlx->plyr->plyr_x) * tan(norm_ngl);
 	if ((is_neg_orientation(norm_ngl, 1) && y_delta < 0) || (!is_neg_orientation(norm_ngl, 1) && y_delta > 0))
 		y_delta *= -1;
 	while (!check_wall(x_next_inter + corrector, y_next_inter, mlx))
