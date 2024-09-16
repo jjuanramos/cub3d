@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:52:36 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/16 13:35:03 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/16 13:53:59 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	key_destroy(t_mlx *mlx);
 
 int	key_push(int keycode, t_mlx *mlx)
 {
+	printf("on push called!\n");
 	if (keycode == KEY_A)
 		mlx->plyr->l_r = -1;
 	if (keycode == KEY_S)
@@ -35,6 +36,7 @@ int	key_push(int keycode, t_mlx *mlx)
 
 int	key_release(int keycode, t_mlx *mlx)
 {
+	printf("on release called!\n");
 	if (keycode == KEY_A || keycode == KEY_D)
 		mlx->plyr->l_r = 0;
 	if (keycode == KEY_S || keycode == KEY_W)
@@ -46,6 +48,7 @@ int	key_release(int keycode, t_mlx *mlx)
 
 int	key_destroy(t_mlx *mlx)
 {
+	printf("on destroy called!\n");
 	free_mlx(mlx);
 	exit(0);
 	return (0);

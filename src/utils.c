@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 10:15:46 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/12 16:08:22 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/16 13:45:50 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	free_mlx(t_mlx *mlx)
 	}
 	if (mlx->mlx && mlx->win)
 		mlx_destroy_window(mlx->mlx, mlx->win);
+	exit(0);
 	return (0);
 }
 
