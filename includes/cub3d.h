@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/16 13:55:25 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/17 08:45:01 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,11 @@ void	init_mlx(t_mlx *mlx, char **argv);
 void	start_game(t_mlx *mlx);
 
 /* movement */
+void	hook_player_mvmt(t_mlx *mlx);
+
+/* key_hooks */
+int		key_destroy(t_mlx *mlx);
 int		key_push(int keycode, t_mlx *mlx);
 int		key_release(int keycode, t_mlx *mlx);
-int		key_destroy(t_mlx *mlx);
-void	hook_player_mvmt(t_mlx *mlx);
 
 #endif
