@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/16 13:55:25 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/17 10:51:03 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,23 @@
 typedef struct s_map
 {
 	char	**map;
-	char	*no_text;
-	char	*so_text;
-	char	*we_text;
-	char	*ea_text;
+	char	*no_path;
+	char	*so_path;
+	char	*we_path;
+	char	*ea_path;
 	// int		*floor_color;
 	// int		*ceiling_color;
 	int		width;
 	int		height;	
 }				t_map;
+
+typdef struct	s_textures
+{
+	void	*no_text;
+	void	*so_text;
+	void	*we_text;
+	void	*ea_text;
+}				t_textures;		
 
 typedef struct s_player
 {
@@ -116,6 +124,7 @@ typedef struct s_mlx
 	t_map		*map;
 	t_ray		*ray;
 	t_player	*plyr;
+	t_textures	*text;
 }			t_mlx;
 
 /* init_player */
@@ -148,5 +157,7 @@ int		key_push(int keycode, t_mlx *mlx);
 int		key_release(int keycode, t_mlx *mlx);
 int		key_destroy(t_mlx *mlx);
 void	update_player_mvmt(t_mlx *mlx, int move_x, int move_y);
+
+/* textures */
 
 #endif
