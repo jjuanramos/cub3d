@@ -23,7 +23,7 @@ int	game_loop(void *ml)
 	mlx->img->addr = (int *)mlx_get_data_addr(mlx->img->img,
 			&(mlx->img->bits_per_pixel),
 			&(mlx->img->size_line), &(mlx->img->endian));
-	// update_player_mvmt(mlx, 0, 0);
+	hook_player_mvmt(mlx);
 	cast_rays(mlx);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img->img, 0, 0);
 	mlx_destroy_image(mlx->mlx, mlx->img->img);

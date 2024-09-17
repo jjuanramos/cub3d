@@ -22,33 +22,6 @@
 # define ROTATION_SPEED 0.015
 # define PLAYER_SPEED 4
 
-/*	Buttons & Keys	*/
-# ifdef __APPLE__
-# include <TargetConditionals.h>
-#if TARGET_OS_MAC
-	# define KEY_ESC 61
-	# define KEY_A 8
-	# define KEY_W 21
-	# define KEY_S 9
-	# define KEY_D 10
-	# define KEY_LEFT 131
-	# define KEY_RIGHT 132
-	#define SYSTEM_IS_MACOS 1
-#endif
-# endif
-
-// Check if the system is Linux
-#ifdef __linux__
-#define SYSTEM_IS_LINUX 1
-# define KEY_ESC 9
-# define KEY_A 38
-# define KEY_W 25
-# define KEY_S 39
-# define KEY_D 40
-# define KEY_LEFT 100
-# define KEY_RIGHT 102
-#endif
-
 /*	Key events */
 # define ON_KEY_DOWN 2
 # define ON_KEY_UP 3
@@ -63,6 +36,8 @@
 # include <math.h>
 # include <stdbool.h>
 # include "../minilibx-linux/mlx.h"
+# include <X11/keysym.h>
+# include <X11/X.h>
 
 typedef struct s_map
 {
@@ -147,6 +122,6 @@ void	start_game(t_mlx *mlx);
 int		key_push(int keycode, t_mlx *mlx);
 int		key_release(int keycode, t_mlx *mlx);
 int		key_destroy(t_mlx *mlx);
-void	update_player_mvmt(t_mlx *mlx, int move_x, int move_y);
+void	hook_player_mvmt(t_mlx *mlx);
 
 #endif
