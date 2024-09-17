@@ -6,7 +6,7 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:58:31 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/17 12:12:12 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/17 12:19:32 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ void	debug_main(t_mlx *mlx)
 void	init_mlx(t_mlx *mlx, char **argv)
 {
 	init_empty_mlx(mlx);
+	mlx->mlx = mlx_init();
+	if (!mlx->mlx)
+		ft_error("Could not initiate mlx", mlx);
 	parse_map(argv[1], mlx);
 	mlx->map->width = 9;
 	mlx->map->height = 5;
@@ -42,8 +45,8 @@ void	init_mlx(t_mlx *mlx, char **argv)
 		ft_error("Issue initiating image\n", mlx);
 	if (init_empty_ray(mlx))
 		ft_error("Issue initiating ray\n", mlx);
-	//if (init_textures(mlx))
-		//ft_error("Issue initating textures\n", mlx);
+	if (init_textures(mlx))
+		ft_error("Issue initating textures\n", mlx);
 }
 
 int	main(int argc, char **argv)

@@ -6,7 +6,7 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:43:39 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/17 12:12:06 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/17 12:17:33 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static int	new_text(t_mlx *mlx, t_texture *text, char *path)
 {
-	if (!(text->text->img = mlx_xpm_file_to_image(mlx->mlx, path,
+	(void)path;
+	if (!(text->text->img = mlx_xpm_file_to_image(mlx->mlx, "textures/wall_1.xpm",
 		&(text->width), &(text->height))))
 			return (1);
 	if (!(text->text->addr = (int *)mlx_get_data_addr(text->text->img,

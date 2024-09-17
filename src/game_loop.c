@@ -6,7 +6,7 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:36:51 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/17 11:52:59 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/17 12:19:28 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ int	game_loop(void *ml)
 
 void	start_game(t_mlx *mlx)
 {
-	mlx->mlx = mlx_init();
-	if (!mlx->mlx)
-		ft_error("Could not initiate mlx", mlx);
 	mlx->win = mlx_new_window(mlx->mlx, SCREENWIDTH, SCREENHEIGHT, "Cub3D");
 	mlx_loop_hook(mlx->mlx, &game_loop, mlx);
 	mlx_hook(mlx->win, ON_KEY_DOWN, 1L << 0, key_push, mlx);
