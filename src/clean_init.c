@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:28:46 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/16 13:31:25 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/17 10:50:16 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_empty_player(t_player *plyr)
 	plyr->angle = 0;
 }
 
-static void	init_empty_mlx(t_mlx *mlx)
+void	init_empty_mlx(t_mlx *mlx)
 {
 	mlx->mlx = NULL;
 	mlx->img = NULL;
@@ -37,7 +37,7 @@ static void	init_empty_mlx(t_mlx *mlx)
 	mlx->plyr = NULL;
 }
 
-static int	init_empty_img(t_mlx *mlx)
+ int	init_empty_img(t_mlx *mlx)
 {
 	mlx->img = ft_calloc(1, sizeof(t_img));
 	if (!mlx->img)
@@ -50,7 +50,15 @@ static int	init_empty_img(t_mlx *mlx)
 	return (0);
 }
 
-static int	init_empty_ray(t_mlx *mlx)
+int init_empty_text(t_mlx *mlx)
+{
+	mlx->text->no_text = NULL;
+	mlx->text->so_text = NULL;
+	mlx->text->ea_text = NULL;
+	mlx->text->we_text = NULL;
+}
+
+int	init_empty_ray(t_mlx *mlx)
 {
 	mlx->ray = ft_calloc(1, sizeof(t_ray));
 	if (!mlx->ray)
@@ -60,18 +68,3 @@ static int	init_empty_ray(t_mlx *mlx)
 	mlx->ray->ray_ngl = 0;
 	return (0);
 }
-
-void	init_mlx(t_mlx *mlx, char **argv)
-{
-	init_empty_mlx(mlx);
-	parse_map(argv[1], mlx);
-	mlx->map->width = 9;
-	mlx->map->height = 5;
-	if (init_player(mlx))
-		ft_error("Issue initiating player\n", mlx);
-	if (init_empty_img(mlx))
-		ft_error("Issue initiating image\n", mlx);
-	if (init_empty_ray(mlx))
-		ft_error("Issue initiating ray\n", mlx);
-}
-

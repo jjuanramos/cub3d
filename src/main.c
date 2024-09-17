@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:58:31 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/13 11:29:03 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/17 10:47:44 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,21 @@ void	debug_main(t_mlx *mlx)
 		printf("%s", mlx->map->map[y]);
 		y++;
 	}
+}
+void	init_mlx(t_mlx *mlx, char **argv)
+{
+	init_empty_mlx(mlx);
+	parse_map(argv[1], mlx);
+	mlx->map->width = 9;
+	mlx->map->height = 5;
+	if (init_player(mlx))
+		ft_error("Issue initiating player\n", mlx);
+	if (init_empty_img(mlx))
+		ft_error("Issue initiating image\n", mlx);
+	if (init_empty_ray(mlx))
+		ft_error("Issue initiating ray\n", mlx);
+	if (init_textures(mlx))
+		ft_error("Issue initating textures\n", mlx);
 }
 
 int	main(int argc, char **argv)
