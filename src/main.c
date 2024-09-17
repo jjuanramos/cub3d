@@ -6,7 +6,7 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:58:31 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/17 10:47:44 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/17 12:12:12 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	debug_main(t_mlx *mlx)
 
 	display_player(mlx->plyr);
 	printf("textures: %s %s %s %s\n",
-		mlx->map->no_text, mlx->map->so_text,
-		mlx->map->we_text, mlx->map->ea_text
+		mlx->map->no_path, mlx->map->so_path,
+		mlx->map->we_path, mlx->map->ea_path
 		// mlx->map->ceiling_color[0], mlx->map->ceiling_color[1],
 		// mlx->map->ceiling_color[2], mlx->map->floor_color[0],
 		// mlx->map->floor_color[1], mlx.map->floor_color[2]
@@ -38,12 +38,12 @@ void	init_mlx(t_mlx *mlx, char **argv)
 	mlx->map->height = 5;
 	if (init_player(mlx))
 		ft_error("Issue initiating player\n", mlx);
-	if (init_empty_img(mlx))
+	if (init_empty_img(&(mlx->img)))
 		ft_error("Issue initiating image\n", mlx);
 	if (init_empty_ray(mlx))
 		ft_error("Issue initiating ray\n", mlx);
-	if (init_textures(mlx))
-		ft_error("Issue initating textures\n", mlx);
+	//if (init_textures(mlx))
+		//ft_error("Issue initating textures\n", mlx);
 }
 
 int	main(int argc, char **argv)

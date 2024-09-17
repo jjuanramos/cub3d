@@ -6,7 +6,7 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:28:43 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/17 10:46:04 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/17 11:14:32 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,10 +236,10 @@ t_map *fill_map_info(char **read)
 	t_map	*ret;
 	
 	ret = ft_calloc(sizeof(t_map), 1);
-	ret->no_path = get_text(read, "NO ");
-	ret->so_path = get_text(read, "SO ");
-	ret->we_path = get_text(read, "WE ");
-	ret->ea_path = get_text(read, "EA ");
+	ret->no_path = get_text(read, "NO ") + 3;
+	ret->so_path = get_text(read, "SO ") + 3;
+	ret->we_path = get_text(read, "WE ") + 3;
+	ret->ea_path = get_text(read, "EA ") + 3;
 	// ret->floor_color = ft_calloc(sizeof(int), 1); // get_color_parse(read, "F");
 	// ret->ceiling_color = ft_calloc(sizeof(int), 1); // get_color_parse(read, "C");
 	ret->map = get_map(read); // cargar el mapa y solo el mapa

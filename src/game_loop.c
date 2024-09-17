@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_loop.c                                         :+:      :+:    :+:   */
+/*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:36:51 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/16 13:34:05 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/17 11:52:59 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	game_loop(void *ml)
 	if (!mlx->img->img)
 		ft_error("Error creating image", mlx);
 	mlx->img->addr = (int *)mlx_get_data_addr(mlx->img->img,
-			&(mlx->img->bits_per_pixel),
+			&(mlx->img->bpp),
 			&(mlx->img->size_line), &(mlx->img->endian));
 	hook_player_mvmt(mlx);
 	cast_rays(mlx);

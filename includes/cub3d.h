@@ -6,7 +6,7 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/17 10:53:13 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/17 12:10:29 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define MAPHEIGHT 24
 # define SCREENWIDTH 640
 # define SCREENHEIGHT 480
-# define TILE_SIZE 30
+# define TILE_SIZE 32
 # define FOV 60
 # define ROTATION_SPEED 0.015
 # define PLAYER_SPEED 4
@@ -52,14 +52,6 @@ typedef struct s_map
 	int		height;	
 }				t_map;
 
-typdef struct	s_textures
-{
-	void	*no_text;
-	void	*so_text;
-	void	*we_text;
-	void	*ea_text;
-}				t_textures;		
-
 typedef struct s_player
 {
 	int		pos_x;
@@ -86,10 +78,17 @@ typedef struct s_img
 {
 	void	*img;
 	int		*addr;
-	int		bits_per_pixel;
+	int		bpp;
 	int		size_line;
 	int		endian;
 }			t_img;
+
+typedef struct	s_texture
+{
+	t_img	*text;
+	int		width;
+	int		height;	
+}				t_texture;		
 
 typedef struct s_mlx
 {
@@ -99,7 +98,10 @@ typedef struct s_mlx
 	t_map		*map;
 	t_ray		*ray;
 	t_player	*plyr;
-	t_textures	*text;
+	t_texture	*no_text;
+	t_texture	*so_text;
+	t_texture	*ea_text;
+	t_texture	*we_text;
 }			t_mlx;
 
 /* init_player */
@@ -122,7 +124,10 @@ void	render(t_mlx *mlx, int x);
 
 /* clean_init */
 void	init_empty_player(t_player *plyr);
-void	init_mlx(t_mlx *mlx, char **argv);
+void	init_empty_mlx(t_mlx *mlx);
+int		init_empty_img(t_img **img);
+int		init_empty_ray(t_mlx *mlx);
+int 	init_empty_text(t_texture **text);
 
 /* game_loop */
 void	start_game(t_mlx *mlx);
@@ -136,5 +141,6 @@ int		key_push(int keycode, t_mlx *mlx);
 int		key_release(int keycode, t_mlx *mlx);
 
 /* textures */
+int		init_textures(t_mlx *mlx);
 
 #endif

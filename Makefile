@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+         #
+#    By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/15 16:43:25 by juramos           #+#    #+#              #
-#    Updated: 2024/09/17 08:45:43 by juramos          ###   ########.fr        #
+#    Updated: 2024/09/17 10:56:34 by camunozg         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ CFLAGS 		= 	-Wall -Werror -Wextra -g3 -fsanitize=address
 # Sources
 SRC_DIR 	= 	src/
 SRC_FILES 	= 	main init_player utils parse raycasting render \
-				clean_init game_loop movement key_hooks
+				clean_init game_loop movement key_hooks textures
 				
 SRC 		=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 

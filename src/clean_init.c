@@ -6,7 +6,7 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:28:46 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/17 10:50:16 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/17 12:09:50 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,29 @@ void	init_empty_mlx(t_mlx *mlx)
 	mlx->plyr = NULL;
 }
 
- int	init_empty_img(t_mlx *mlx)
+int	init_empty_img(t_img **img)
 {
-	mlx->img = ft_calloc(1, sizeof(t_img));
-	if (!mlx->img)
+	(*img) = ft_calloc(1, sizeof(t_img));
+	if (!(*img))
 		return (1);
-	mlx->img->img = NULL;
-	mlx->img->addr = NULL;
-	mlx->img->bits_per_pixel = 0;
-	mlx->img->size_line = 0;
-	mlx->img->endian = 0;
+	(*img)->img = NULL;
+	(*img)->addr = NULL;
+	(*img)->bpp = 0;
+	(*img)->size_line = 0;
+	(*img)->endian = 0;
 	return (0);
 }
 
-int init_empty_text(t_mlx *mlx)
+int init_empty_text(t_texture **text)
 {
-	mlx->text->no_text = NULL;
-	mlx->text->so_text = NULL;
-	mlx->text->ea_text = NULL;
-	mlx->text->we_text = NULL;
+	*text = ft_calloc(1, sizeof(t_texture));
+	if (!(*text))
+		return (1);
+	if (init_empty_img(&((*text)->text)))
+		return (1);
+	(*text)->height = 0;
+	(*text)->width = 0;
+	return (0);
 }
 
 int	init_empty_ray(t_mlx *mlx)
