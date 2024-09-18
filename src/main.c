@@ -6,7 +6,7 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:58:31 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/17 12:19:32 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/18 12:24:21 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ void	init_mlx(t_mlx *mlx, char **argv)
 	if (!mlx->mlx)
 		ft_error("Could not initiate mlx", mlx);
 	parse_map(argv[1], mlx);
+	// printf("floor %d, %d, %d \n ceiling %d, %d, %d \n", mlx->map->floor_color[0], mlx->map->floor_color[1],
+	// 	mlx->map->floor_color[2], mlx->map->ceiling_color[0], mlx->map->ceiling_color[1], mlx->map->ceiling_color[2]);
+	// exit(0);
 	mlx->map->width = 9;
 	mlx->map->height = 5;
 	if (init_player(mlx))

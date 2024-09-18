@@ -6,7 +6,7 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:28:43 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/17 12:20:06 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/18 12:18:27 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,12 +141,16 @@ int *get_rgb_int_arr(char *line) //eg 255,1,99
 	i = 0;
 	j = 0;
 	rgb = ft_calloc(sizeof(int), 3);
-	while (j <= 3) 
+	if (!rgb)
+		return (NULL);
+	while (j < 3) 
 	{
+		while (*line && !(*line >= 48 && *line <= 57))
+			line++;
 		while (line[i] && (line[i] >= 48 && line[i] <= 57))
 			i++;
 		hold = ft_calloc(sizeof(char), i + 1);
-		ft_strlcpy(hold, line, i);
+		ft_strlcpy(hold, line, i + 1);
 		rgb[j] = ft_atoi(hold);
 		if (rgb[j] < 0 || rgb[j] > 255)
 			return (free(hold), NULL);
@@ -169,7 +173,7 @@ int *get_color_parse(char **read, char *to_find)
 		j = 0;
 		while (read[i][j] && read[i][j] == ' ')
 			j++;
-		if (ft_strncmp(read[i], to_find, ft_strlen(to_find)) == 0)
+		if (ft_strncmp(read[i], to_find, ft_strlen(to_find)) == 0 && !ft_strchr(read[i], '-'))
 			return (get_rgb_int_arr(read[i])); // Lo mismo, falta comprobacion creo
 		i++;
 	}
@@ -240,11 +244,11 @@ t_map *fill_map_info(char **read)
 	ret->so_path = get_text(read, "SO ") + 3;
 	ret->we_path = get_text(read, "WE ") + 3;
 	ret->ea_path = get_text(read, "EA ") + 3;
-	// ret->floor_color = ft_calloc(sizeof(int), 1); // get_color_parse(read, "F");
-	// ret->ceiling_color = ft_calloc(sizeof(int), 1); // get_color_parse(read, "C");
+	ret->floor_color = get_color_parse(read, "F");
+	ret->ceiling_color = get_color_parse(read, "C");
 	ret->map = get_map(read); // cargar el mapa y solo el mapa
-	// if (!ret->floor_color || !ret->ceiling_color)
-	// 	return (printf("Colors are incorrect\n"), exit(1), NULL);
+	if (!ret->floor_color || !ret->ceiling_color)
+		return (printf("Colors are incorrect\n"), exit(1), NULL);
 	if (!ret->no_path || !ret->so_path || !ret->ea_path || !ret->we_path)
 		return (printf("Texture paths are incorrect\n"), exit(1), NULL);
 	free(read);

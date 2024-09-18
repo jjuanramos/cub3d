@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:23:11 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/18 11:45:28 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/18 12:33:03 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,10 @@ static void	draw_wall(t_mlx *mlx, double t_pixel, double b_pixel,
 		y_offset += factor;
 	}
 }
+int    get_rgb(int *rgb)
+{
+    return (255 << 24 | rgb[0] << 16 | rgb[1] << 8 | rgb[2]);
+}
 
 static void	draw_floor_ceiling(t_mlx *mlx, double t_pixel,
 	double b_pixel)
@@ -121,10 +125,10 @@ static void	draw_floor_ceiling(t_mlx *mlx, double t_pixel,
 
 	i = b_pixel;
 	while (i < SCREENHEIGHT)
-		set_image_pixel(mlx->img, mlx->ray->index, i++, 0xB99470FF);
+		set_image_pixel(mlx->img, mlx->ray->index, i++, get_rgb(mlx->map->floor_color));
 	i = t_pixel;
 	while (i > 0)
-		set_image_pixel(mlx->img, mlx->ray->index, i--, 0x89CFF3FF);
+		set_image_pixel(mlx->img, mlx->ray->index, i--, get_rgb(mlx->map->ceiling_color));
 }
 
 // (TILE_SIZE / distance): scales wall height by distance;
