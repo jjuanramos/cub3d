@@ -6,7 +6,7 @@
 #    By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/15 16:43:25 by juramos           #+#    #+#              #
-#    Updated: 2024/09/17 10:56:34 by camunozg         ###   ########.fr        #
+#    Updated: 2024/09/18 12:55:03 by camunozg         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME 		= 	cub3d
 
 # Compiler
 CC 			= 	gcc
-CFLAGS 		= 	-Wall -Werror -Wextra -g3 -fsanitize=address
+CFLAGS 		= 	-Wall -Werror -Wextra -g3 #-fsanitize=address
 
 # Sources
 SRC_DIR 	= 	src/

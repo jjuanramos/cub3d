@@ -1,10 +1,16 @@
+
+
+
 NO textures/wall_1.xpm
-SO textures/wall_2.xpm
-WE textures/wall_3.xpm
+   SO textures/wall_2.xpm
+
+
+WE  textures/wall_3.xpm    
+     FE 255,    0,0      
+
 EA textures/wall_4.xpm
 
-F 255,0,0
-C 4,30,0
+ C    4   ,    30    ,    0
 
 111111111
 101001001

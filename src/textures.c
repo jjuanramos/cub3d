@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:43:39 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/18 11:49:51 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/18 13:05:25 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 static int	new_text(t_mlx *mlx, t_texture *text, char *path)
 {
-	(void)path;
-	if (!(text->text->img = mlx_xpm_file_to_image(mlx->mlx, ft_strtrim(path, "\n"),
+	if (!(text->text->img = mlx_xpm_file_to_image(mlx->mlx, path,
 		&(text->width), &(text->height))))
 			return (1);
 	if (!(text->text->addr = (int *)mlx_get_data_addr(text->text->img,

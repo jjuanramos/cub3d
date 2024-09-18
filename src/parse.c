@@ -6,7 +6,7 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:28:43 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/18 12:18:27 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:14:00 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ char *get_text(char **read, char *to_find)
 		j = 0;
 		while (read[i][j] && read[i][j] == ' ')
 			j++;
-		if (ft_strncmp(read[i], to_find, ft_strlen(to_find)) == 0)
-			return (read[i]); // Aqui falta hacer algun tipo de comprobacion de que el path exista ? Quiza solo de que el texto este correcto y comprobar si existe se puede hacer despues
+		if (ft_strncmp(read[i] + j, to_find, ft_strlen(to_find)) == 0)
+			return (read[i] + j);
 		i++;
 	}
 	return (NULL);
@@ -173,8 +173,8 @@ int *get_color_parse(char **read, char *to_find)
 		j = 0;
 		while (read[i][j] && read[i][j] == ' ')
 			j++;
-		if (ft_strncmp(read[i], to_find, ft_strlen(to_find)) == 0 && !ft_strchr(read[i], '-'))
-			return (get_rgb_int_arr(read[i])); // Lo mismo, falta comprobacion creo
+		if (ft_strncmp(read[i] + j, to_find, ft_strlen(to_find)) == 0 && !ft_strchr(read[i], '-'))
+			return (get_rgb_int_arr(read[i] + j)); // Lo mismo, falta comprobacion creo
 		i++;
 	}
 	return (NULL);
@@ -235,22 +235,43 @@ char **get_map(char **read) // contar que tex_lines llegue a 6
 	return (clean_map);
 }
 
-t_map *fill_map_info(char **read)
+char *trim_path(char *path, char *prefix)
+{
+	char	*new_path;
+	
+	if (!path)
+		return (NULL); 
+	while (ft_isspace(*path))
+		path++;
+	path = ft_strtrim(path, "\n");
+	while(*path == *prefix)
+	{
+		path++;
+		prefix++;
+	}
+	while (ft_isspace(*path))
+		path++;
+	new_path = ft_strtrim(ft_strdup(path), " ");
+	//free(path);
+	return (new_path);
+}
+
+t_map *fill_map_info(t_mlx *mlx, char **read)
 {
 	t_map	*ret;
 	
 	ret = ft_calloc(sizeof(t_map), 1);
-	ret->no_path = get_text(read, "NO ") + 3;
-	ret->so_path = get_text(read, "SO ") + 3;
-	ret->we_path = get_text(read, "WE ") + 3;
-	ret->ea_path = get_text(read, "EA ") + 3;
+	ret->no_path = trim_path(get_text(read, "NO "), "NO");
+	ret->so_path = trim_path(get_text(read, "SO "), "SO");
+	ret->we_path = trim_path(get_text(read, "WE "), "WE");
+	ret->ea_path = trim_path(get_text(read, "EA "), "EA");
+	if (!ret->no_path || !ret->so_path || !ret->ea_path || !ret->we_path)
+		ft_error("Texture paths are incorrect", mlx);
 	ret->floor_color = get_color_parse(read, "F");
 	ret->ceiling_color = get_color_parse(read, "C");
-	ret->map = get_map(read); // cargar el mapa y solo el mapa
 	if (!ret->floor_color || !ret->ceiling_color)
-		return (printf("Colors are incorrect\n"), exit(1), NULL);
-	if (!ret->no_path || !ret->so_path || !ret->ea_path || !ret->we_path)
-		return (printf("Texture paths are incorrect\n"), exit(1), NULL);
+		ft_error("Colors are incorrect", mlx);
+	ret->map = get_map(read); // cargar el mapa y solo el mapa
 	free(read);
 	return (ret);
 }
@@ -356,7 +377,7 @@ void parse_map(char *file, t_mlx *mlx)
 	printf("successful read\n");
 	if (!read) // read esta vacio
 		(printf("Empty map"), exit(1));
-	mlx->map = fill_map_info(read);
+	mlx->map = fill_map_info(mlx, read);
 	check_valid_map(mlx->map); // aqui hacer las comprobaciones de si el mapa es valido
 }
 
