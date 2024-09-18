@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:28:46 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/17 12:09:50 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/18 10:38:02 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,10 @@ int	init_empty_ray(t_mlx *mlx)
 	mlx->ray->distance = 0;
 	mlx->ray->is_horizontal = 0;
 	mlx->ray->ray_ngl = 0;
+	mlx->ray->horiz_x = 0;
+	mlx->ray->horiz_y = 0;
+	mlx->ray->vert_x = 0;
+	mlx->ray->vert_y = 0;
+	mlx->ray->index = 0;
 	return (0);
 }
