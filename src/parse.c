@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:28:43 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/19 12:00:23 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/19 12:27:44 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int *get_rgb_int_arr(char *line) //eg 255,1,99
 		ft_strlcpy(hold, line, i + 1);
 		rgb[j] = ft_atoi(hold);
 		if (rgb[j] < 0 || rgb[j] > 255 || is_empty(hold))
-			return (free(hold), NULL);
+			return (free(rgb), free(hold), NULL);
 		free(hold);
 		line += i;
 		i = 0;
@@ -173,12 +173,25 @@ int	ft_isspace2(char c)
 int	is_valid_str_clr_cntnt(char *str, char to_find)
 {
 	int	i;
+	int	commas;
+	int	digits;
 
 	i = -1;
+	commas = 0;
+	digits = 0;
 	while (str[++i])
+	{
 		if (str[i] != to_find && !ft_isspace2(str[i]) && !ft_isdigit(str[i])
 			&& str[i] != ',')
 				return (0);
+		else if (str[i] == ',')
+			commas++;
+		else if (ft_isdigit(str[i]) && str[i - 1]
+			&& !ft_isdigit(str[i - 1]))
+			digits++;
+	}
+	if (commas != 2 || digits > 3)
+		return (0);
 	return (1);
 }
 

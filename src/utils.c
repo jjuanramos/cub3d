@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 10:15:46 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/19 11:43:29 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/19 12:21:29 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	free_map(t_map *map)
 {
 	int	i;
 
+	if (!map)
+		return ;
 	if (map->no_path)
 		free(map->no_path);
 	if (map->so_path)
