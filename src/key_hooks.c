@@ -6,11 +6,11 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:42:47 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/17 08:43:40 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/19 12:45:59 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/cub3d.h"
+#include "../includes/cub3d.h"
 
 int		key_destroy(t_mlx *mlx);
 int		key_push(int keycode, t_mlx *mlx);

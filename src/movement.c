@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:52:36 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/17 08:44:26 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/19 12:47:15 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,10 @@ static void	move_player(t_mlx *mlx, int move_x, int move_y)
 	map_x = (new_plyr_x / TILE_SIZE);
 	map_y = (new_plyr_y / TILE_SIZE);
 	if (mlx->map->map[map_y][map_x] != '1'
-		&& mlx->map->map[map_y][(int)floor(mlx->plyr->plyr_x / TILE_SIZE)] != '1'
-		&& mlx->map->map[(int)floor(mlx->plyr->plyr_y / TILE_SIZE)][map_x] != '1')
+		&& mlx->map->map[map_y][(int)floor \
+		(mlx->plyr->plyr_x / TILE_SIZE)] != '1'
+		&& mlx->map->map[(int)floor \
+		(mlx->plyr->plyr_y / TILE_SIZE)][map_x] != '1')
 	{
 		mlx->plyr->plyr_x = new_plyr_x;
 		mlx->plyr->plyr_y = new_plyr_y;

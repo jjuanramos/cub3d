@@ -6,24 +6,25 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:28:43 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/19 12:27:44 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/19 13:22:51 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-bool is_empty(char *line);
+bool	is_empty(char *line);
 
-int check_file_extension(char *file)
+int	check_file_extension(char *file)
 {
 	size_t	i;
 
 	i = ft_strlen(file);
 	if (ft_strncmp((file + i - 4), ".cub", 4))
 		return (1);
-	else 
+	else
 		return (0);
 }
+
 void	free_arr(char **arr)
 {
 	int	pos;
@@ -59,14 +60,14 @@ int	get_line_nbr(char **map)
 	return (i);
 }
 
-char **append_str(char **map, char *buf) 
+char	**append_str(char **map, char *buf)
 {
-	char **new_map;
-	int	line_nbr;
+	char	**new_map;
+	int		line_nbr;
 
 	line_nbr = get_line_nbr(map);
 	new_map = ft_calloc(sizeof(char *), line_nbr + 2);
-	if (!(*map)) 
+	if (!(*map))
 	{
 		new_map[0] = ft_strdup(buf);
 		new_map[1] = NULL;
@@ -78,10 +79,10 @@ char **append_str(char **map, char *buf)
 		new_map[line_nbr + 1] = NULL;
 	}
 	free_arr(map);
-	return(new_map);
+	return (new_map);
 }
 
-char **get_file_contents(int fd) // rellenar una matriz con cada linea del archivo. crear una funcion que sea append 
+char	**get_file_contents(int fd)
 {
 	char	**map;
 	char	*buf;
@@ -101,28 +102,13 @@ char **get_file_contents(int fd) // rellenar una matriz con cada linea del archi
 	return (map);
 }
 
-// char *clean_spaces(char *line) 
-// {
-// 	char *hold;
-// 	char *clean_line;
-	
-// 	hold = line;
-// 	while (*hold && *hold != ' ')
-// 		hold++;
-// 	while (*hold && *hold == ' ')
-// 		hold++;
-// 	clean_line = ft_strdup(line);
-// 	free(line); // necesario?
-// 	return (clean_line);
-// }
-
-char *get_text(char **read, char *to_find)
+char	*get_text(char **read, char *to_find)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (read[i]) 
+	while (read[i])
 	{
 		j = 0;
 		while (read[i][j] && read[i][j] == ' ')
@@ -134,9 +120,9 @@ char *get_text(char **read, char *to_find)
 	return (NULL);
 }
 
-int *get_rgb_int_arr(char *line) //eg 255,1,99
+int	*get_rgb_int_arr(char *line)
 {
-	int 	*rgb;
+	int		*rgb;
 	char	*hold;
 	int		i;
 	int		j;
@@ -146,7 +132,7 @@ int *get_rgb_int_arr(char *line) //eg 255,1,99
 	rgb = ft_calloc(sizeof(int), 3);
 	if (!rgb)
 		return (NULL);
-	while (j < 3) 
+	while (j < 3)
 	{
 		while (*line && !(*line >= 48 && *line <= 57))
 			line++;
@@ -183,7 +169,7 @@ int	is_valid_str_clr_cntnt(char *str, char to_find)
 	{
 		if (str[i] != to_find && !ft_isspace2(str[i]) && !ft_isdigit(str[i])
 			&& str[i] != ',')
-				return (0);
+			return (0);
 		else if (str[i] == ',')
 			commas++;
 		else if (ft_isdigit(str[i]) && str[i - 1]
@@ -195,52 +181,52 @@ int	is_valid_str_clr_cntnt(char *str, char to_find)
 	return (1);
 }
 
-int *get_color_parse(char **read, char *to_find)
+int	*get_color_parse(char **read, char *to_find)
 {
 	int		i;
 	int		j;
 
 	i = 0;
-	
-	while (read[i]) 
+	while (read[i])
 	{
 		j = 0;
 		while (read[i][j] && read[i][j] == ' ')
 			j++;
-		if (ft_strncmp(read[i] + j, to_find, ft_strlen(to_find)) == 0 &&
-				is_valid_str_clr_cntnt(read[i] + j, to_find[0]))
-			return (get_rgb_int_arr(read[i] + j)); // Lo mismo, falta comprobacion creo
+		if (ft_strncmp(read[i] + j, to_find, ft_strlen(to_find)) == 0
+			&& is_valid_str_clr_cntnt(read[i] + j, to_find[0]))
+			return (get_rgb_int_arr(read[i] + j));
 		i++;
 	}
 	return (NULL);
 }
 
-int	ft_arrlen(char **arr) 
+int	ft_arrlen(char **arr)
 {
 	int	i;
 
 	i = 0;
 	while (arr[i])
 		i++;
-	return(i);
+	return (i);
 }
 
-bool is_empty(char *line)
+bool	is_empty(char *line)
 {
-	int i;
+	int	i;
 	int	not_space;
 
 	i = 0;
 	not_space = 0;
-	while (line[i] && line[i] != '\n') 
+	while (line[i] && line[i] != '\n')
 	{
-		if (line[i] != ' ') not_space++;
+		if (line[i] != ' ')
+			not_space++;
 		i++;
 	}
 	return (not_space == 0);
 }
 
-char **get_map(char **read) // contar que tex_lines llegue a 6 
+char	**get_map(char **read)
 {
 	char	**clean_map;
 	int		lines_in_file;
@@ -250,7 +236,7 @@ char **get_map(char **read) // contar que tex_lines llegue a 6
 	lines_in_file = ft_arrlen(read);
 	tex_lines = 0;
 	blank_lines = 0;
-	while (*read && tex_lines != 6) 
+	while (*read && tex_lines != 6)
 	{
 		if (is_empty(*read))
 			blank_lines++;
@@ -263,26 +249,27 @@ char **get_map(char **read) // contar que tex_lines llegue a 6
 		read++;
 		blank_lines++;
 	}
-	clean_map = ft_calloc(sizeof(char *), (lines_in_file - tex_lines - blank_lines + 1));
+	clean_map = ft_calloc(sizeof(char *),
+			(lines_in_file - tex_lines - blank_lines + 1));
 	if (!clean_map)
 		return (NULL);
 	ft_arrdup(clean_map, read);
 	return (clean_map);
 }
 
-char *trim_path(char *path, char *prefix)
+char	*trim_path(char *path, char *prefix)
 {
 	char	*new_path;
 	char	*helper;
 	char	*ref;		
 
 	if (!path)
-		return (NULL); 
+		return (NULL);
 	while (ft_isspace2(*path))
 		path++;
 	helper = ft_strtrim(path, "\n");
 	ref = helper;
-	while(*helper == *prefix)
+	while (*helper == *prefix)
 	{
 		helper++;
 		prefix++;
@@ -293,10 +280,10 @@ char *trim_path(char *path, char *prefix)
 	return (free(ref), new_path);
 }
 
-t_map *fill_map_info(t_mlx *mlx, char **read)
+t_map	*fill_map_info(t_mlx *mlx, char **read)
 {
 	t_map	*ret;
-	
+
 	ret = ft_calloc(sizeof(t_map), 1);
 	ret->no_path = trim_path(get_text(read, "NO "), "NO");
 	ret->so_path = trim_path(get_text(read, "SO "), "SO");
@@ -308,25 +295,26 @@ t_map *fill_map_info(t_mlx *mlx, char **read)
 	ret->ceiling_color = get_color_parse(read, "C ");
 	if (!ret->floor_color || !ret->ceiling_color)
 		ft_error("Colors are incorrect", mlx);
-	ret->map = get_map(read); // cargar el mapa y solo el mapa
+	ret->map = get_map(read);
 	free_arr(read);
 	return (ret);
 }
 
 int	is_valid_char(char c)
 {
-	return (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == ' ');
+	return (c == '0' || c == '1' || c == 'N' || c == 'S'
+		|| c == 'E' || c == 'W' || c == ' ');
 }
 
-int check_spaces(char c) 
+int	check_spaces(char c)
 {
 	(void)c;
 	return (0);
 }
 
-int check_row(char *line)
+int	check_row(char *line)
 {
-	char tmp;
+	char	tmp;
 
 	while (*line && *line == ' ')
 		line++;
@@ -339,8 +327,8 @@ int check_row(char *line)
 		line++;
 	}
 	if (tmp != '1')
-		return(1);
-	return(0);
+		return (1);
+	return (0);
 }
 
 int	get_width(char **map)
@@ -361,41 +349,7 @@ int	get_width(char **map)
 	return (max_row_len);
 }
 
-// int get_width(char **map)
-// {
-// 	int		width;
-// 	int		spaces;
-// 	bool	found_space;
-// 	int		i;
-// 	int		j;
-
-// 	found_space = false;
-// 	i = 0;
-// 	width = 0;
-// 	while (map[i])
-// 	{
-// 		j = 0;
-// 		while (map[i][j] && map[i][j] == ' ')
-// 				j++;
-// 		while (map[i][j] && map[i][j] != '\n')
-// 		{
-// 			if (map[i][j] == ' ')
-// 			{
-// 				found_space = true;
-// 				spaces++;
-// 			}
-// 			if (found_space == true && map[i][j] != ' ')
-// 				spaces = 0;
-// 			j++;
-// 		}
-// 		if (width < j - spaces)
-// 			width = j - spaces;
-// 		i++;
-// 	}
-// 	return (width);
-// }
-
-void	check_valid_map(t_map *map, t_mlx *mlx) 
+void	check_valid_map(t_map *map, t_mlx *mlx)
 {
 	int	i;
 	int	j;
@@ -480,7 +434,7 @@ void	check_map_is_together(char **map, t_mlx *mlx)
 	}
 }
 
-void parse_map(char *file, t_mlx *mlx)
+void	parse_map(char *file, t_mlx *mlx)
 {
 	int		fd;
 	char	**read;
@@ -497,14 +451,3 @@ void parse_map(char *file, t_mlx *mlx)
 	check_zeros_out_of_bounds(mlx->map->map, mlx);
 	check_map_is_together(mlx->map->map, mlx);
 }
-
-// // Los calloc deberian ser malloc? por el hecho de que si fallase alguno deberiamos liberar toda la memoria que alocamos
-
-// int main(int argc, char *argv[]) 
-// {
-// 	t_map	*map;
-	
-// 	if (argc != 2)
-// 		ft_error("There must be two arguments"); // Crear ft ft_error
-// 	parse_map(argv[1], map);
-// }

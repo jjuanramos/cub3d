@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 10:45:05 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/13 10:32:56 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/19 12:44:29 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ int	fill_player(t_mlx *mlx)
 	int	x;
 	int	times;
 
-	y = 0;
+	y = -1;
 	times = 0;
-	while (mlx->map->map[y])
+	while (mlx->map->map[++y])
 	{
 		x = 0;
 		while (mlx->map->map[y][x])
@@ -105,7 +105,6 @@ int	fill_player(t_mlx *mlx)
 			}
 			x++;
 		}
-		y++;
 	}
 	return (times != 1);
 }

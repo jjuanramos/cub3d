@@ -6,75 +6,18 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 10:12:00 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/18 10:37:34 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/19 12:53:28 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static int	check_orientation(double norm_ngl, float *next_inter,
-				float *delta, int is_horizon);
-static int	is_down_or_left(double norm_ngl, int is_horizon);
-static int	check_wall(float x, float y, t_mlx *mlx);
-
-static int	check_orientation(double norm_ngl, float *next_inter,
-		float *delta, int is_horizon)
-{
-	if (is_horizon)
-	{
-		if (norm_ngl > 0 && norm_ngl < M_PI) // checks if the ray is facing downwards
-		{
-			*next_inter += TILE_SIZE;	// moves the y intersection point to a the horizontal line below
-			return (1);
-		}
-		*delta *= -1; // increments are negative if facing south (upwards)
-	}
-	else 
-	{
-		if (!((norm_ngl > M_PI / 2 ) && (norm_ngl < (3 * M_PI / 2))))
-		{
-			*next_inter += TILE_SIZE;
-			return (1);
-		}
-		*delta *= -1;
-	}
-	return (-1);
-}
-
-static int	is_down_or_left(double norm_ngl, int is_horizon)
-{
-	if (is_horizon)
-	{
-		if (norm_ngl > 0 && norm_ngl < M_PI)
-			return (1);
-	}
-	else
-	{
-		if ((norm_ngl > (M_PI) / 2 && norm_ngl < (3 * M_PI / 2)))
-			return (1);
-	}
-	return (0);
-}
-
-static int	check_wall(float x, float y, t_mlx *mlx)
-{
-	int	x_map;
-	int	y_map;
-
-	if (x < 0 || y < 0)
-		return (1);
-	x_map = floor(x / TILE_SIZE);
-	y_map = floor(y / TILE_SIZE);
-	if (x_map > mlx->map->width - 1
-		|| y_map > mlx->map->height - 1)
-		return (1);
-	if (mlx->map->map[y_map] && x_map <= (int)ft_strlen(mlx->map->map[y_map]))
-		if (mlx->map->map[y_map][x_map] == '1')
-			return (1);
-	return (0);
-}
-
-double	get_h_inter(t_mlx *mlx, double norm_ngl)
+/*
+	We return the hypothenuse (distance) of the triangle formed by
+	the original point and the final intersection
+	(the one that hits a wall).
+*/
+static double	get_h_inter(t_mlx *mlx, double norm_ngl)
 {
 	float	x_delta;
 	float	y_delta;
@@ -86,8 +29,10 @@ double	get_h_inter(t_mlx *mlx, double norm_ngl)
 	x_delta = TILE_SIZE / tan(norm_ngl);
 	y_next_inter = (floor(mlx->plyr->plyr_y / TILE_SIZE) * TILE_SIZE);
 	corrector = check_orientation(norm_ngl, &y_next_inter, &y_delta, 1);
-	x_next_inter = mlx->plyr->plyr_x + (y_next_inter - mlx->plyr->plyr_y) / tan(norm_ngl);
-	if ((is_down_or_left(norm_ngl, 0) && x_delta > 0) || (!is_down_or_left(norm_ngl, 0) && x_delta < 0))
+	x_next_inter = mlx->plyr->plyr_x + (y_next_inter - mlx->plyr->plyr_y) \
+	/ tan(norm_ngl);
+	if ((is_down_or_left(norm_ngl, 0) && x_delta > 0)
+		|| (!is_down_or_left(norm_ngl, 0) && x_delta < 0))
 		x_delta *= -1;
 	while (!check_wall(x_next_inter, y_next_inter + corrector, mlx))
 	{
@@ -96,11 +41,11 @@ double	get_h_inter(t_mlx *mlx, double norm_ngl)
 	}
 	mlx->ray->horiz_x = x_next_inter;
 	mlx->ray->horiz_y = y_next_inter;
-	return (sqrt(pow(x_next_inter - mlx->plyr->plyr_x, 2) + pow(y_next_inter - mlx->plyr->plyr_y, 2)));
-	// we return the hypothenuse (distance) of the triangle formed by the original point and the final intersection (the one that hits a wall).
+	return (sqrt(pow(x_next_inter - mlx->plyr->plyr_x, 2)
+			+ pow(y_next_inter - mlx->plyr->plyr_y, 2)));
 }
 
-double	get_v_inter(t_mlx *mlx, double norm_ngl)
+static double	get_v_inter(t_mlx *mlx, double norm_ngl)
 {
 	float	x_delta;
 	float	y_delta;
@@ -112,8 +57,10 @@ double	get_v_inter(t_mlx *mlx, double norm_ngl)
 	y_delta = TILE_SIZE * tan(norm_ngl);
 	x_next_inter = (floor(mlx->plyr->plyr_x / TILE_SIZE) * TILE_SIZE);
 	corrector = check_orientation(norm_ngl, &x_next_inter, &x_delta, 0);
-	y_next_inter = mlx->plyr->plyr_y + (x_next_inter - mlx->plyr->plyr_x) * tan(norm_ngl);
-	if ((is_down_or_left(norm_ngl, 1) && y_delta < 0) || (!is_down_or_left(norm_ngl, 1) && y_delta > 0))
+	y_next_inter = mlx->plyr->plyr_y + (x_next_inter - mlx->plyr->plyr_x) \
+	* tan(norm_ngl);
+	if ((is_down_or_left(norm_ngl, 1) && y_delta < 0)
+		|| (!is_down_or_left(norm_ngl, 1) && y_delta > 0))
 		y_delta *= -1;
 	while (!check_wall(x_next_inter + corrector, y_next_inter, mlx))
 	{
@@ -122,7 +69,8 @@ double	get_v_inter(t_mlx *mlx, double norm_ngl)
 	}
 	mlx->ray->vert_x = x_next_inter;
 	mlx->ray->vert_y = y_next_inter;
-	return (sqrt(pow(x_next_inter - mlx->plyr->plyr_x, 2) + pow(y_next_inter - mlx->plyr->plyr_y, 2)));
+	return (sqrt(pow(x_next_inter - mlx->plyr->plyr_x, 2)
+			+ pow(y_next_inter - mlx->plyr->plyr_y, 2)));
 }
 
 void	cast_rays(t_mlx *mlx)

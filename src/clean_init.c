@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:28:46 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/18 10:38:02 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/19 12:43:31 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	init_empty_img(t_img **img)
 	return (0);
 }
 
-int init_empty_text(t_texture **text)
+int	init_empty_text(t_texture **text)
 {
 	*text = ft_calloc(1, sizeof(t_texture));
 	if (!(*text))

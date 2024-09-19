@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/18 12:03:07 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:03:07 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ typedef struct s_img
 	int		endian;
 }			t_img;
 
-typedef struct	s_texture
+typedef struct s_texture
 {
 	t_img	*text;
 	int		width;
@@ -110,42 +110,54 @@ typedef struct s_mlx
 }			t_mlx;
 
 /* init_player */
-int		init_player(t_mlx *mlx);
-void	display_player(t_player *plyr);
+int			init_player(t_mlx *mlx);
+void		display_player(t_player *plyr);
 
 /* utils */
-int		free_mlx(t_mlx *mlx);
-int		ft_error(char *errormsg, t_mlx *mlx);
-double	normalize(double angle);
+int			free_mlx(t_mlx *mlx);
+int			ft_error(char *errormsg, t_mlx *mlx);
+double		normalize(double angle);
 
 /* parse_map */
-void	parse_map(char *file, t_mlx *mlx);
+void		parse_map(char *file, t_mlx *mlx);
 
 /* raycasting */
-void	cast_rays(t_mlx *mlx);
+void		cast_rays(t_mlx *mlx);
+
+/* raycasting_utils */
+int			check_orientation(double norm_ngl, float *next_inter,
+				float *delta, int is_horizon);
+int			is_down_or_left(double norm_ngl, int is_horizon);
+int			check_wall(float x, float y, t_mlx *mlx);
 
 /* render */
-void	render(t_mlx *mlx, int x);
+void		render(t_mlx *mlx, int x);
+
+/* render_utils */
+int			get_rgb(int *rgb);
+void		set_image_pixel(t_img *img, int x, int y, int color);
+t_texture	*get_texture(t_mlx *mlx, double norm_ngl);
+double		get_x_offset(t_texture *text, t_mlx *mlx);
 
 /* clean_init */
-void	init_empty_player(t_player *plyr);
-void	init_empty_mlx(t_mlx *mlx);
-int		init_empty_img(t_img **img);
-int		init_empty_ray(t_mlx *mlx);
-int 	init_empty_text(t_texture **text);
+void		init_empty_player(t_player *plyr);
+void		init_empty_mlx(t_mlx *mlx);
+int			init_empty_img(t_img **img);
+int			init_empty_ray(t_mlx *mlx);
+int			init_empty_text(t_texture **text);
 
 /* game_loop */
-void	start_game(t_mlx *mlx);
+void		start_game(t_mlx *mlx);
 
 /* movement */
-void	hook_player_mvmt(t_mlx *mlx);
+void		hook_player_mvmt(t_mlx *mlx);
 
 /* key_hooks */
-int		key_destroy(t_mlx *mlx);
-int		key_push(int keycode, t_mlx *mlx);
-int		key_release(int keycode, t_mlx *mlx);
+int			key_destroy(t_mlx *mlx);
+int			key_push(int keycode, t_mlx *mlx);
+int			key_release(int keycode, t_mlx *mlx);
 
 /* textures */
-int		init_textures(t_mlx *mlx);
+int			init_textures(t_mlx *mlx);
 
 #endif
