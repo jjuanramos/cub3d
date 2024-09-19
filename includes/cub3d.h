@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/19 13:03:07 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/19 13:53:19 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,5 +159,34 @@ int			key_release(int keycode, t_mlx *mlx);
 
 /* textures */
 int			init_textures(t_mlx *mlx);
+
+/* parse_checks */
+int			check_file_extension(char *file);
+int			check_row(char *line);
+void		check_zeros_out_of_bounds(char **map, t_mlx *mlx);
+void		check_map_is_together(char **map, t_mlx *mlx);
+
+/* parse_checks_2 */
+int			is_empty(char *line);
+int			is_valid_char(char c);
+int			is_valid_str_clr_cntnt(char *str, char to_find);
+int			ft_isspace2(char c);
+
+/* parse_getters */
+int			get_line_nbr(char **map);
+char		*get_text(char **read, char *to_find);
+int			*get_rgb_int_arr(char *line);
+int			*get_color_parse(char **read, char *to_find);
+int			get_width(char **map);
+
+/* parse_arr_helpers */
+void		free_arr(char **arr);
+void		ft_arrdup(char **dst, char **src);
+char		**append_str(char **map, char *buf);
+int			ft_arrlen(char **arr);
+
+/* parse_tools */
+char		*trim_path(char *path, char *prefix);
+void		replace_spaces_with_ones(t_map *map);
 
 #endif
