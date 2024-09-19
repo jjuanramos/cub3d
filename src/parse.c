@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:28:43 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/19 13:28:22 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/19 13:29:48 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,11 +242,8 @@ char	**get_map(char **read)
 			tex_lines++;
 		read++;
 	}
-	while (*read && is_empty(*read))
-	{
-		read++;
+	while (*read && is_empty(*read) && read++)
 		blank_lines++;
-	}
 	clean_map = ft_calloc(sizeof(char *),
 			(lines_in_file - tex_lines - blank_lines + 1));
 	if (!clean_map)
