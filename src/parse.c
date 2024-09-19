@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:28:43 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/19 11:34:45 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/19 12:00:23 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ char **get_file_contents(int fd) // rellenar una matriz con cada linea del archi
 		free(buf);
 		buf = get_next_line(fd);
 	}
+	free(buf);
 	return (map);
 }
 
@@ -259,22 +260,24 @@ char **get_map(char **read) // contar que tex_lines llegue a 6
 char *trim_path(char *path, char *prefix)
 {
 	char	*new_path;
-	
+	char	*helper;
+	char	*ref;		
+
 	if (!path)
 		return (NULL); 
 	while (ft_isspace2(*path))
 		path++;
-	path = ft_strtrim(path, "\n");
-	while(*path == *prefix)
+	helper = ft_strtrim(path, "\n");
+	ref = helper;
+	while(*helper == *prefix)
 	{
-		path++;
+		helper++;
 		prefix++;
 	}
-	while (ft_isspace2(*path))
-		path++;
-	new_path = ft_strtrim(ft_strdup(path), " ");
-	//free(path);
-	return (new_path);
+	while (ft_isspace2(*helper))
+		helper++;
+	new_path = ft_strtrim(helper, " ");
+	return (free(ref), new_path);
 }
 
 t_map *fill_map_info(t_mlx *mlx, char **read)
@@ -293,7 +296,7 @@ t_map *fill_map_info(t_mlx *mlx, char **read)
 	if (!ret->floor_color || !ret->ceiling_color)
 		ft_error("Colors are incorrect", mlx);
 	ret->map = get_map(read); // cargar el mapa y solo el mapa
-	free(read);
+	free_arr(read);
 	return (ret);
 }
 
