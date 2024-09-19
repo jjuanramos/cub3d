@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:28:43 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/18 13:25:57 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/19 11:26:09 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+bool is_empty(char *line);
 
 int check_file_extension(char *file)
 {
@@ -152,7 +154,7 @@ int *get_rgb_int_arr(char *line) //eg 255,1,99
 		hold = ft_calloc(sizeof(char), i + 1);
 		ft_strlcpy(hold, line, i + 1);
 		rgb[j] = ft_atoi(hold);
-		if (rgb[j] < 0 || rgb[j] > 255)
+		if (rgb[j] < 0 || rgb[j] > 255 || is_empty(hold))
 			return (free(hold), NULL);
 		free(hold);
 		line += i;
@@ -162,18 +164,37 @@ int *get_rgb_int_arr(char *line) //eg 255,1,99
 	return (rgb);
 }
 
+int	ft_isspace2(char c)
+{
+	return (c == ' ' || c == '\n');
+}
+
+int	is_valid_str_clr_cntnt(char *str, char to_find)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		if (str[i] != to_find && !ft_isspace2(str[i]) && !ft_isdigit(str[i])
+			&& str[i] != ',')
+				return (0);
+	return (1);
+}
+
 int *get_color_parse(char **read, char *to_find)
 {
 	int		i;
 	int		j;
 
 	i = 0;
+	
 	while (read[i]) 
 	{
 		j = 0;
 		while (read[i][j] && read[i][j] == ' ')
 			j++;
-		if (ft_strncmp(read[i] + j, to_find, ft_strlen(to_find)) == 0 && !ft_strchr(read[i], '-'))
+		if (ft_strncmp(read[i] + j, to_find, ft_strlen(to_find)) == 0 &&
+				is_valid_str_clr_cntnt(read[i] + j, to_find[0]))
 			return (get_rgb_int_arr(read[i] + j)); // Lo mismo, falta comprobacion creo
 		i++;
 	}
@@ -190,7 +211,7 @@ int	ft_arrlen(char **arr)
 	return(i);
 }
 
-bool is_empty(char *line) 
+bool is_empty(char *line)
 {
 	int i;
 	int	not_space;
@@ -241,7 +262,7 @@ char *trim_path(char *path, char *prefix)
 	
 	if (!path)
 		return (NULL); 
-	while (ft_isspace(*path))
+	while (ft_isspace2(*path))
 		path++;
 	path = ft_strtrim(path, "\n");
 	while(*path == *prefix)
@@ -249,7 +270,7 @@ char *trim_path(char *path, char *prefix)
 		path++;
 		prefix++;
 	}
-	while (ft_isspace(*path))
+	while (ft_isspace2(*path))
 		path++;
 	new_path = ft_strtrim(ft_strdup(path), " ");
 	//free(path);
@@ -267,8 +288,8 @@ t_map *fill_map_info(t_mlx *mlx, char **read)
 	ret->ea_path = trim_path(get_text(read, "EA "), "EA");
 	if (!ret->no_path || !ret->so_path || !ret->ea_path || !ret->we_path)
 		ft_error("Texture paths are incorrect", mlx);
-	ret->floor_color = get_color_parse(read, "F");
-	ret->ceiling_color = get_color_parse(read, "C");
+	ret->floor_color = get_color_parse(read, "F ");
+	ret->ceiling_color = get_color_parse(read, "C ");
 	if (!ret->floor_color || !ret->ceiling_color)
 		ft_error("Colors are incorrect", mlx);
 	ret->map = get_map(read); // cargar el mapa y solo el mapa
@@ -290,7 +311,7 @@ int check_spaces(char c)
 int check_row(char *line)
 {
 	char tmp;
-	
+
 	while (*line && *line == ' ')
 		line++;
 	if (*line && *line != '1')
@@ -306,41 +327,59 @@ int check_row(char *line)
 	return(0);
 }
 
-int get_width(char **map)
+int	get_width(char **map)
 {
-	int		width;
-	int		spaces;
-	bool	found_space;
-	int		i;
-	int		j;
+	int	max_row_len;
+	int	current_row;
+	int	current_row_len;
 
-	found_space = false;
-	i = 0;
-	width = 0;
-	while (map[i]) 
+	max_row_len = 0;
+	current_row = 0;
+	while (map[current_row])
 	{
-		j = 0;
-		while (map[i][j] && map[i][j] == ' ')
-				j++;
-		while (map[i][j] && map[i][j] != '\n')
-		{
-			if (map[i][j] == ' ')
-			{
-				found_space = true;
-				spaces++;
-			}
-			if (found_space == true && map[i][j] != ' ')
-				spaces = 0;
-			j++;
-		}
-		if (width < j - spaces)
-			width = j - spaces;
-		i++;
+		current_row_len = ft_strlen(map[current_row]);
+		if (current_row_len > max_row_len)
+			max_row_len = current_row_len;
+		current_row++;
 	}
-	return (width);
+	return (max_row_len);
 }
 
-void check_valid_map(t_map *map) 
+// int get_width(char **map)
+// {
+// 	int		width;
+// 	int		spaces;
+// 	bool	found_space;
+// 	int		i;
+// 	int		j;
+
+// 	found_space = false;
+// 	i = 0;
+// 	width = 0;
+// 	while (map[i])
+// 	{
+// 		j = 0;
+// 		while (map[i][j] && map[i][j] == ' ')
+// 				j++;
+// 		while (map[i][j] && map[i][j] != '\n')
+// 		{
+// 			if (map[i][j] == ' ')
+// 			{
+// 				found_space = true;
+// 				spaces++;
+// 			}
+// 			if (found_space == true && map[i][j] != ' ')
+// 				spaces = 0;
+// 			j++;
+// 		}
+// 		if (width < j - spaces)
+// 			width = j - spaces;
+// 		i++;
+// 	}
+// 	return (width);
+// }
+
+void	check_valid_map(t_map *map, t_mlx *mlx) 
 {
 	int	i;
 	int	j;
@@ -352,17 +391,81 @@ void check_valid_map(t_map *map)
 		j = 0;
 		while (map->map[i][j] && map->map[i][j] != '\n')
 		{
-			if ((i == 0 || i == map->height || check_spaces(map->map[i][j])) && map->map[i][j] != '1')
-				(printf("Map is not enclosed: %c, (%d %d)\n", map->map[i][j], i, j), exit(1));
-			else if (check_row(map->map[i]))
-				(printf("Map is not enclosed 2\n"), exit(1));
+			if ((i == 0 || i == map->height - 1
+					|| check_spaces(map->map[i][j])) && map->map[i][j] != '1')
+				ft_error("Map is not enclosed.", mlx);
 			else if (!is_valid_char(map->map[i][j]))
-				(printf("Wrong Character: %c\n", map->map[i][j]), exit(1));
+				ft_error("Wrong Character.", mlx);
+			else if (check_row(map->map[i]))
+				ft_error("Issue reading map.", mlx);
 			j++;
 		}
 		i++;
 	}
 	map->width = get_width(map->map);
+}
+
+void	replace_spaces_with_ones(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map->map[i])
+	{
+		j = 0;
+		while (map->map[i][j])
+		{
+			if (map->map[i][j] == ' ')
+				map->map[i][j] = '1';
+			j++;
+		}
+		i++;
+	}
+}
+
+void	check_zeros_out_of_bounds(char **map, t_mlx *mlx)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == '0' && map[i - 1]
+			&& map[i + 1])
+			{
+				if (!map[i - 1][j] || !map[i + 1][j])
+					ft_error("Map not enclosed.", mlx);
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+void	check_map_is_together(char **map, t_mlx *mlx)
+{
+	int	i;
+	int	last_empty;
+
+	i = 0;
+	last_empty = 0;
+	while (map[i])
+	{
+		if (is_empty(map[i]))
+		{
+			last_empty = 1;
+			i++;
+			continue ;
+		}
+		if (!is_empty(map[i]) && last_empty)
+			ft_error("Map is not together.", mlx);
+		i++;
+	}
 }
 
 void parse_map(char *file, t_mlx *mlx)
@@ -374,11 +477,13 @@ void parse_map(char *file, t_mlx *mlx)
 	if (fd < 0 || check_file_extension(file))
 		(printf("Issue with the file"), exit(1));
 	read = get_file_contents(fd);
-	printf("successful read\n");
-	if (!read) // read esta vacio
+	if (!read)
 		(printf("Empty map"), exit(1));
 	mlx->map = fill_map_info(mlx, read);
-	check_valid_map(mlx->map); // aqui hacer las comprobaciones de si el mapa es valido
+	check_valid_map(mlx->map, mlx);
+	replace_spaces_with_ones(mlx->map);
+	check_zeros_out_of_bounds(mlx->map->map, mlx);
+	check_map_is_together(mlx->map->map, mlx);
 }
 
 // // Los calloc deberian ser malloc? por el hecho de que si fallase alguno deberiamos liberar toda la memoria que alocamos
