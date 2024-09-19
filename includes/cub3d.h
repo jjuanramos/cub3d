@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/19 13:53:19 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/19 14:01:21 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define TILE_SIZE 32
 # define FOV 60
 # define ROTATION_SPEED 0.025
-# define PLAYER_SPEED 4
+# define PLAYER_SPEED 1.5
 
 /*	Key events */
 # define ON_KEY_DOWN 2
