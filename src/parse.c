@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:28:43 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/19 11:26:09 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/19 11:34:45 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -457,11 +457,7 @@ void	check_map_is_together(char **map, t_mlx *mlx)
 	while (map[i])
 	{
 		if (is_empty(map[i]))
-		{
 			last_empty = 1;
-			i++;
-			continue ;
-		}
 		if (!is_empty(map[i]) && last_empty)
 			ft_error("Map is not together.", mlx);
 		i++;
