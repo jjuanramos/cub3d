@@ -6,7 +6,7 @@
 /*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:28:43 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/19 13:22:51 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/19 13:28:22 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,13 +127,13 @@ int	*get_rgb_int_arr(char *line)
 	int		i;
 	int		j;
 
-	i = 0;
-	j = 0;
+	j = -1;
 	rgb = ft_calloc(sizeof(int), 3);
 	if (!rgb)
 		return (NULL);
-	while (j < 3)
+	while (++j < 3)
 	{
+		i = 0;
 		while (*line && !(*line >= 48 && *line <= 57))
 			line++;
 		while (line[i] && (line[i] >= 48 && line[i] <= 57))
@@ -145,8 +145,6 @@ int	*get_rgb_int_arr(char *line)
 			return (free(rgb), free(hold), NULL);
 		free(hold);
 		line += i;
-		i = 0;
-		j++;
 	}
 	return (rgb);
 }
