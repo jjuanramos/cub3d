@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_checks_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:46:15 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/19 13:56:54 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/20 09:41:12 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int		is_empty(char *line);
 int		is_valid_char(char c);
 int		is_valid_str_clr_cntnt(char *str, char to_find);
 int		ft_isspace2(char c);
+void	check_map_is_together(char **map, t_mlx *mlx);
 
 int	ft_isspace2(char c)
 {
@@ -67,4 +68,21 @@ int	is_valid_char(char c)
 {
 	return (c == '0' || c == '1' || c == 'N' || c == 'S'
 		|| c == 'E' || c == 'W' || c == ' ');
+}
+
+void	check_map_is_together(char **map, t_mlx *mlx)
+{
+	int	i;
+	int	last_empty;
+
+	i = 0;
+	last_empty = 0;
+	while (map[i])
+	{
+		if (is_empty(map[i]))
+			last_empty = 1;
+		if (!is_empty(map[i]) && last_empty)
+			ft_error("Map is not together.", mlx);
+		i++;
+	}
 }

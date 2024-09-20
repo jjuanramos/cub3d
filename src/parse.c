@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:28:43 by camunozg          #+#    #+#             */
-/*   Updated: 2024/09/19 13:56:11 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/20 09:55:19 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ void	check_valid_map(t_map *map, t_mlx *mlx)
 		j = 0;
 		while (map->map[i][j] && map->map[i][j] != '\n')
 		{
-			if ((i == 0 || i == map->height - 1) && map->map[i][j] != '1')
+			if ((i == 0 || i == map->height - 1)
+				&& (map->map[i][j] != '1' && check_space_edges(map->map, i, -1)))
 				ft_error("Map is not enclosed.", mlx);
 			else if (!is_valid_char(map->map[i][j]))
 				ft_error("Wrong Character.", mlx);
@@ -126,6 +127,6 @@ void	parse_map(char *file, t_mlx *mlx)
 	mlx->map = fill_map_info(mlx, read);
 	check_valid_map(mlx->map, mlx);
 	replace_spaces_with_ones(mlx->map);
-	check_zeros_out_of_bounds(mlx->map->map, mlx);
+	check_zeros_out_of_bounds(mlx->map->map, mlx); // segf
 	check_map_is_together(mlx->map->map, mlx);
 }
