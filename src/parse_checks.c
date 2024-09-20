@@ -6,7 +6,7 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:41:50 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/20 10:18:20 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/20 11:20:13 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	check_zeros_out_of_bounds(char **map, t_mlx *mlx)
 			&& map[i + 1])
 			{
 				if (!map[i - 1][j] || !map[i + 1][j])
-					ft_error("Map not enclosed.", mlx);
+					ft_error("Map is not enclosed.", mlx);
 			}
 			j++;
 		}
@@ -105,7 +105,7 @@ int	check_space_edges(char **map, int row, int i)
 					return (1);
 				adjust_row += inc;
 			}
-			if (map[row + adjust_row][i] != '1')
+			if (map[row + adjust_row][i] && map[row + adjust_row][i] != '1')
 				return (1);
 		}
 		else if (map[row][i] == '0')
