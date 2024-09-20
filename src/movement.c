@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:52:36 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/19 12:47:15 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/20 11:54:16 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
 void		hook_player_mvmt(t_mlx *mlx);
-static void	move_left_right(t_mlx *mlx, int *move_x, int *move_y);
-static void	move_up_down(t_mlx *mlx, int *move_x, int *move_y);
+static void	move_left_right(t_mlx *mlx, double *move_x, double *move_y);
+static void	move_up_down(t_mlx *mlx, double *move_x, double *move_y);
 static void	rotate_player(t_mlx *mlx);
-static void	move_player(t_mlx *mlx, int move_x, int move_y);
+static void	move_player(t_mlx *mlx, double move_x, double move_y);
 
 /*
 	1 equals moving to the right,
 	-1, to the left.
 */
-static void	move_left_right(t_mlx *mlx, int *move_x, int *move_y)
-{
+static void	move_left_right(t_mlx *mlx, double *move_x, double *move_y)
+{	
 	if (mlx->plyr->l_r == 1)
 	{
 		*move_x = -sin(mlx->plyr->angle) * PLAYER_SPEED;
@@ -40,7 +40,7 @@ static void	move_left_right(t_mlx *mlx, int *move_x, int *move_y)
 	1 equals moving up,
 	-1, down.
 */
-static void	move_up_down(t_mlx *mlx, int *move_x, int *move_y)
+static void	move_up_down(t_mlx *mlx, double *move_x, double *move_y)
 {
 	if (mlx->plyr->u_d == 1)
 	{
@@ -66,12 +66,12 @@ static void	rotate_player(t_mlx *mlx)
 		mlx->plyr->angle = normalize(mlx->plyr->angle - ROTATION_SPEED);
 }
 
-static void	move_player(t_mlx *mlx, int move_x, int move_y)
+static void	move_player(t_mlx *mlx, double move_x, double move_y)
 {
-	int	map_x;
-	int	map_y;
-	int	new_plyr_x;
-	int	new_plyr_y;
+	int		map_x;
+	int		map_y;
+	double	new_plyr_x;
+	double	new_plyr_y;
 
 	new_plyr_x = roundf(mlx->plyr->plyr_x + move_x);
 	new_plyr_y = roundf(mlx->plyr->plyr_y + move_y);
@@ -90,16 +90,16 @@ static void	move_player(t_mlx *mlx, int move_x, int move_y)
 
 void	hook_player_mvmt(t_mlx *mlx)
 {
-	int	move_x;
-	int	move_y;
+	double	move_x;
+	double	move_y;
 
 	move_x = 0;
 	move_y = 0;
+	if (mlx->plyr->rot_dir)
+		rotate_player(mlx);
 	if (mlx->plyr->l_r)
 		move_left_right(mlx, &move_x, &move_y);
 	if (mlx->plyr->u_d)
 		move_up_down(mlx, &move_x, &move_y);
-	if (mlx->plyr->rot_dir)
-		rotate_player(mlx);
 	move_player(mlx, move_x, move_y);
 }
