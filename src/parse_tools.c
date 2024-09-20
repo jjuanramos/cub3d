@@ -3,17 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:53:32 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/19 13:54:02 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/20 10:25:14 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-char	*trim_path(char *path, char *prefix);
-void	replace_spaces_with_ones(t_map *map);
+int			find_horizontal_zeros(char *line, int *row_col, int inc, char **map); 
+static int	find_vertical_zeros(char **map, int *row_col, int inc);
+char		*trim_path(char *path, char *prefix);
+void		replace_spaces_with_ones(t_map *map);
+
+static int	find_vertical_zeros(char **map, int *row_col, int inc)
+{
+	while (map[row_col[0]] && map[row_col[0]][row_col[1]] && map[row_col[0]][row_col[1]] == ' ')
+		row_col[0] += inc;
+	if (map[row_col[0]][row_col[1]] && map[row_col[0]][row_col[1]] != '1'
+		&& !is_pos(map[row_col[0]][row_col[1]]))
+			return (1);
+	return (0);
+}
+
+int	find_horizontal_zeros(char *line, int *row_col, int inc, char **map) 
+{
+	while (line[row_col[1]] && line[row_col[1]] == ' ')
+	{
+		if (find_vertical_zeros(map, row_col, 1) || find_vertical_zeros(map, row_col, -1))
+			return (1);
+		row_col[1] += inc;
+	}
+	if (line[row_col[1]] && line[row_col[1]] != '1' && !is_pos(line[row_col[1]]))
+		return (1);
+	return (0);
+}
 
 char	*trim_path(char *path, char *prefix)
 {

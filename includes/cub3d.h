@@ -6,7 +6,7 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/19 14:01:21 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/20 10:18:45 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct s_mlx
 /* init_player */
 int			init_player(t_mlx *mlx);
 void		display_player(t_player *plyr);
+int			is_pos(char c);
 
 /* utils */
 int			free_mlx(t_mlx *mlx);
@@ -161,16 +162,17 @@ int			key_release(int keycode, t_mlx *mlx);
 int			init_textures(t_mlx *mlx);
 
 /* parse_checks */
-int			check_file_extension(char *file);
 int			check_row(char *line);
 void		check_zeros_out_of_bounds(char **map, t_mlx *mlx);
 void		check_map_is_together(char **map, t_mlx *mlx);
+int			check_file_extension(char *file);
 
 /* parse_checks_2 */
 int			is_empty(char *line);
 int			is_valid_char(char c);
 int			is_valid_str_clr_cntnt(char *str, char to_find);
 int			ft_isspace2(char c);
+int			check_space_edges(char **map, int row, int i);
 
 /* parse_getters */
 int			get_line_nbr(char **map);
@@ -188,5 +190,6 @@ int			ft_arrlen(char **arr);
 /* parse_tools */
 char		*trim_path(char *path, char *prefix);
 void		replace_spaces_with_ones(t_map *map);
+int			find_horizontal_zeros(char *line, int *row_col, int inc, char **map); 
 
 #endif
