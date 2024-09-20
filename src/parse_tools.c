@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:53:32 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/20 11:19:47 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:36:41 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int			find_horizontal_zeros(char *line, int *row_col, int inc, char **map); 
+int			find_horizontal_zeros(char *line,
+				int *row_col, int inc, char **map);
 static int	find_vertical_zeros(char **map, int row, int col, int inc);
 char		*trim_path(char *path, char *prefix);
 void		replace_spaces_with_ones(t_map *map);
@@ -23,18 +24,17 @@ static int	find_vertical_zeros(char **map, int row, int col, int inc)
 		row += inc;
 	if (map[row][col] && map[row][col] != '1'
 		&& !is_pos(map[row][col]))
-			return (1);
+		return (1);
 	return (0);
 }
 
-int	find_horizontal_zeros(char *line, int *row_col, int inc, char **map) 
+int	find_horizontal_zeros(char *line, int *row_col, int inc, char **map)
 {
 	int	local_row;
 	int	local_col;
 
 	local_row = row_col[0];
 	local_col = row_col[1];
-	
 	while (line[local_col] && line[local_col] == ' ')
 	{
 		if (find_vertical_zeros(map, local_col, local_row, 1)

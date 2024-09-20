@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:52:36 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/20 11:54:16 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:35:30 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	move_player(t_mlx *mlx, double move_x, double move_y);
 	-1, to the left.
 */
 static void	move_left_right(t_mlx *mlx, double *move_x, double *move_y)
-{	
+{
 	if (mlx->plyr->l_r == 1)
 	{
 		*move_x = -sin(mlx->plyr->angle) * PLAYER_SPEED;

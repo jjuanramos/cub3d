@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_checks.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:41:50 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/20 11:20:13 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:35:48 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int			check_row(char *line);
 void		check_zeros_out_of_bounds(char **map, t_mlx *mlx);
 int			check_space_edges(char **map, int row, int i);
 static int	check_space_edges_aux(char **map, int row, int adjust_row, int i);
-
 
 int	check_file_extension(char *file)
 {
@@ -94,7 +93,7 @@ int	check_space_edges(char **map, int row, int i)
 	if (row != 0)
 		adjust_row = -1;
 	inc = adjust_row;
-	while (map[row][++i]) 
+	while (map[row][++i])
 	{
 		if (map[row][i] == ' ')
 		{

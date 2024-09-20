@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/20 12:07:32 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:37:09 by juramos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,7 @@ int			ft_arrlen(char **arr);
 /* parse_tools */
 char		*trim_path(char *path, char *prefix);
 void		replace_spaces_with_ones(t_map *map);
-int			find_horizontal_zeros(char *line, int *row_col, int inc, char **map); 
+int			find_horizontal_zeros(char *line,
+				int *row_col, int inc, char **map);
 
 #endif
