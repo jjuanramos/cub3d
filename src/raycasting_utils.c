@@ -6,16 +6,16 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:53:36 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/20 11:58:23 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/20 12:03:55 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	check_orientation(double norm_ngl, float *next_inter,
-		float *delta, int is_horizon);
+int	check_orientation(double norm_ngl, double *next_inter,
+		double *delta, int is_horizon);
 int	is_down_or_left(double norm_ngl, int is_horizon);
-int	check_wall(float x, float y, t_mlx *mlx);
+int	check_wall(double x, double y, t_mlx *mlx);
 
 /*
 	When our angle is oriented towards the horizontal plane (that is,
@@ -26,8 +26,8 @@ int	check_wall(float x, float y, t_mlx *mlx);
 	We do the same when the angle is looking east or west, east being
 	positive and west, negative.
 */
-int	check_orientation(double norm_ngl, float *next_inter,
-		float *delta, int is_horizon)
+int	check_orientation(double norm_ngl, double *next_inter,
+		double *delta, int is_horizon)
 {
 	if (is_horizon)
 	{
@@ -65,7 +65,7 @@ int	is_down_or_left(double norm_ngl, int is_horizon)
 	return (0);
 }
 
-int	check_wall(float x, float y, t_mlx *mlx)
+int	check_wall(double x, double y, t_mlx *mlx)
 {
 	int	x_map;
 	int	y_map;

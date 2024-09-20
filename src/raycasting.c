@@ -6,7 +6,7 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 10:12:00 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/20 11:58:11 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/20 12:02:15 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 */
 static double	get_h_inter(t_mlx *mlx, double norm_ngl)
 {
-	float	x_delta;
-	float	y_delta;
-	float	y_next_inter;
-	float	x_next_inter;
+	double	x_delta;
+	double	y_delta;
+	double	y_next_inter;
+	double	x_next_inter;
 	int		corrector;
 
 	y_delta = TILE_SIZE;
@@ -47,10 +47,10 @@ static double	get_h_inter(t_mlx *mlx, double norm_ngl)
 
 static double	get_v_inter(t_mlx *mlx, double norm_ngl)
 {
-	float	x_delta;
-	float	y_delta;
-	float	y_next_inter;
-	float	x_next_inter;
+	double	x_delta;
+	double	y_delta;
+	double	y_next_inter;
+	double	x_next_inter;
 	int		corrector;
 
 	x_delta = TILE_SIZE;

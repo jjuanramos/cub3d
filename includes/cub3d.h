@@ -6,7 +6,7 @@
 /*   By: camunozg <camunozg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/20 11:58:07 by camunozg         ###   ########.fr       */
+/*   Updated: 2024/09/20 12:07:32 by camunozg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define TILE_SIZE 32
 # define FOV 60
 # define ROTATION_SPEED 0.025
-# define PLAYER_SPEED 1.5
+# define PLAYER_SPEED 2.8
 
 /*	Key events */
 # define ON_KEY_DOWN 2
@@ -126,10 +126,10 @@ void		parse_map(char *file, t_mlx *mlx);
 void		cast_rays(t_mlx *mlx);
 
 /* raycasting_utils */
-int			check_orientation(double norm_ngl, float *next_inter,
-				float *delta, int is_horizon);
+int			check_orientation(double norm_ngl, double *next_inter,
+				double *delta, int is_horizon);
 int			is_down_or_left(double norm_ngl, int is_horizon);
-int			check_wall(float x, float y, t_mlx *mlx);
+int			check_wall(double x, double y, t_mlx *mlx);
 
 /* render */
 void		render(t_mlx *mlx, int x);
