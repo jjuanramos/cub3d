@@ -6,7 +6,7 @@
 /*   By: cmunoz-g <cmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:53:32 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/23 11:14:38 by cmunoz-g         ###   ########.fr       */
+/*   Updated: 2024/09/23 11:20:04 by cmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	find_vertical_zeros(char **map, int col, int row, int inc)
 		row += inc;
 	if (map[row] && map[row][col] && map[row][col] != '1'
 		&& !is_pos(map[row][col]))
-			return (1);
+		return (1);
 	return (0);
 }
 
@@ -39,7 +39,7 @@ int	find_horizontal_zeros(char *line, int *row_col, int inc, char **map)
 	{
 		if (find_vertical_zeros(map, local_col, local_row, 1)
 			|| find_vertical_zeros(map, local_col, local_row, -1))
-				return (1);
+			return (1);
 		local_col += inc;
 	}
 	if (line[local_col] && line[local_col] != '1' && !is_pos(line[local_col]))
