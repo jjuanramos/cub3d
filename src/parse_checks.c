@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_checks.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: cmunoz-g <cmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:41:50 by juramos           #+#    #+#             */
-/*   Updated: 2024/09/20 13:35:48 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/23 11:11:15 by cmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	check_space_edges_aux(char **map, int row, int adjust_row, int i)
 {
 	int	row_col[2];
 
-	row_col[0] = row;
+	row_col[0] = row + adjust_row;
 	row_col[1] = i;
 	if (find_horizontal_zeros(map[row + adjust_row], row_col, -1, map))
 		return (1);
@@ -89,12 +89,12 @@ int	check_space_edges(char **map, int row, int i)
 	int	adjust_row;
 	int	inc;
 
-	adjust_row = 1;
-	if (row != 0)
-		adjust_row = -1;
-	inc = adjust_row;
 	while (map[row][++i])
 	{
+		adjust_row = 1;
+		if (row != 0)
+			adjust_row = -1;
+		inc = adjust_row;
 		if (map[row][i] == ' ')
 		{
 			while (map[row + adjust_row] && map[row + adjust_row][i]

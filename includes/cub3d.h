@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juramos <juramos@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: cmunoz-g <cmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:09:45 by cmunoz-g          #+#    #+#             */
-/*   Updated: 2024/09/20 13:37:09 by juramos          ###   ########.fr       */
+/*   Updated: 2024/09/23 10:26:28 by cmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 # define MAPWIDTH 24
 # define MAPHEIGHT 24
-# define SCREENWIDTH 640
-# define SCREENHEIGHT 480
+# define SCREENWIDTH 1280
+# define SCREENHEIGHT 960
 # define TILE_SIZE 32
 # define FOV 60
-# define ROTATION_SPEED 0.025
-# define PLAYER_SPEED 2.8
+# define ROTATION_SPEED 0.04
+# define PLAYER_SPEED 4
 
 /*	Key events */
 # define ON_KEY_DOWN 2
