@@ -1,55 +1,69 @@
 # 🧊 cub3D
 
-## Overview
-**cub3D** is a ray-casting project inspired by the classic Wolfenstein 3D game, developed collaboratively by [cmunoz-g](https://github.com/cmunoz-g) and [jjuanramos](https://github.com/jjuanramos). The project aims to create a first-person 3D game environment using a 2D map layout. It covers fundamental concepts like ray-casting, texture rendering and player movement, offering a framework for understanding the mechanics behind 3D game engines.
+Ray‑casting project inspired by Wolfenstein 3D, developed by [cmunoz-g](https://github.com/cmunoz-g) and [jjuanramos](https://github.com/jjuanramos). Renders a first‑person view from a 2D map using MiniLibX, with textured walls, smooth movement, and real‑time updates.
+
+
+## Build and run
+
+**Requirements:** C compiler, `make`, MiniLibX (included as a submodule), **X11** development headers, and **libbsd**.
+
+```bash
+# Clone (includes submodules like MiniLibX)
+git clone --recurse-submodules https://github.com/jjuanramos/cub3d
+cd cub3d
+
+# Build
+make
+
+# Run
+./cub3D path/to/map.cub
+```
+
+
+## Usage
+
+* Provide a `.cub` map describing textures, colors, and layout.
+* Run the binary with the path to the map file.
+
+**Controls**
+
+* `W` `A` `S` `D` — move forward/left/back/right
+* `←` `→` — rotate view
+* `ESC` — exit
+
 
 ## Features
-- **First-Person Perspective**: Navigate through a 3D maze rendered from a 2D map using a custom ray-casting engine.
-- **Textured Walls**: Walls are rendered with distinct textures based on their orientation (North, South, East, West).
-- **Player Movement and Rotation**: Smooth movement and rotation using keyboard controls. 
-- **Dynamic Rendering**: Real-time rendering of the environment as the player moves and rotates within the maze.
 
-## Project Structure
-The project follows a structured flow:
-1. **Initialization**: All structures and variables are initialized to `NULL` or `0`, following safe practices.
-2. **Parsing**: The `.cub` map file is parsed to extract the map layout, textures, and colors.
-3. **MiniLibX Initialization**: MiniLibX is used to create the game window and manage graphics.
-4. **Ray-Casting Calculations**: The `cast_rays()` function calculates the distance to walls by casting rays at incremental angles. It uses both horizontal and vertical ray intersections to determine the closest wall. Each ray's intersection point and distance are then used to render the appropriate textures onto the screen.
-5. **Texture Rendering**: We use `render()` to render walls, floor, and ceiling with appropriate textures based on the player's perspective. The `draw_wall()` function calculates the texture offset and scales it according to the wall height and player position, ensuring a smooth and realistic display of textures.
-6. **Player actions**: The function `hook_player_mvmt()` updates the player's position based on the current movement and rotation state. Wall collisions are detected using the player's new position to prevent moving through walls.
+* **First‑person ray casting** from a 2D grid map.
+* **Textured walls** with orientation‑based textures (N/S/E/W).
+* **Player movement and rotation** with collision checks.
+* **Dynamic rendering**: real‑time frame updates via MiniLibX.
 
-## Installation and Execution
-1. **Clone the Repository**:
-    ```bash
-    git clone [https://github.com/cmunoz-g/cub3d.git](https://github.com/jjuanramos/cub3d.git)
-    ```
-2. **Navigate to the Project Directory**:
-    ```bash
-    cd cub3d
-    ```
-3. **Compile the Program**:
-    ```bash
-    make
-    ```
-4. **Run the Game**:
-    ```bash
-    ./cub3D path/to/map.cub
-    ```
-   Replace `path/to/map.cub` with the path to your `.cub` map file.
 
-## Map File Requirements
-The game relies on a `.cub` configuration file, which must meet the following criteria:
-- **Walls (`1`)**: Enclose the entire map.
-- **Player Start Position**: One of `N`, `S`, `E`, `W` to indicate the player's initial position and orientation.
-- **Valid Characters**: Only `0` (empty space), `1` (wall), and `N`, `S`, `E`, `W` (player start position) are allowed in the map area.
-- **Texture and Color Definitions**: Paths for wall textures and RGB colors for the floor and ceiling must be specified.
+## Project structure
 
-## Controls
-Player movement is handled through keyboard input, where the player's position is updated based on the keys pressed:
-- **`W`, `A`, `S`, `D`**: Move forward, left, backward, and right, respectively.
-- **Left/Right Arrows**: Rotate the player's view left or right.
-- **ESC**: Exit the game.
+* **src/** — core logic: initialization, parsing, ray casting, rendering, input.
+* **include/** — headers and shared types.
+* **maps/** — sample `.cub` maps.
+* **mlx/** — MiniLibX (git submodule).
+* **Makefile** — build targets for debug/release and cleanup.
 
-**cub3D** offers a hands-on experience with low-level graphics programming in C, using MiniLibX for rendering and event handling. It demonstrates how to build a basic 3D game engine, covering aspects like ray-casting, collision detection, and texture mapping. By navigating through the maze and avoiding walls, users can experience a simplified version of a classic 3D game.
 
-Enjoy navigating the maps! 😊
+## Map file requirements
+
+* **Walls (`1`)** fully enclose the traversable area.
+* **Player start** exactly one of `N`, `S`, `E`, `W` marking spawn and facing.
+* **Valid tokens** only `0` (empty), `1` (wall), `N`/`S`/`E`/`W` (spawn).
+* **Textures** paths for N/S/E/W walls.
+* **Colors** RGB for floor and ceiling.
+
+
+## Implementation details
+
+* **Initialization**: All structures and variables initialized to `NULL` or `0`.
+* **Parsing**: `.cub` file parsed to extract map, textures, colors.
+* **MiniLibX**: Sets up window and handles rendering/events.
+* **Ray casting** (`cast_rays()`): Computes wall distances by casting rays at angle increments, using horizontal and vertical intersections, then chooses nearest hit.
+* **Rendering** (`render()`, `draw_wall()`): Draws walls, floor, ceiling. Calculates texture offsets and scales textures by wall height and player distance.
+* **Movement** (`hook_player_mvmt()`): Updates position/rotation, checks for collisions against walls.
+
